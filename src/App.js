@@ -10,6 +10,15 @@ import { themes } from "./configs/css/colors";
 import { Navbar } from "./ui/components/Navbar/Navbar";
 import { Footer } from "./ui/components/Footer/Footer";
 
+/*
+  TODO:
+  1) Aria labels?
+  2) Loaders
+  3) Icon
+  4) Languages Support 
+  5) Check meta
+*/
+
 function App() {
   const [theme, setTheme] = React.useState(themes[0]);
   return (
