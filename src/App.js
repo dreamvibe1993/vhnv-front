@@ -1,12 +1,26 @@
-import { Navbar } from "./components/Navbar/Navbar";
+import React from "react";
+import { ThemeProviderContext } from "./configs/contexts/theme";
+import { ThemeProvider } from "styled-components";
+
 import { Routes } from "./Routes";
+import { GlobalStyles } from "./GlobalStyles";
+
+import { themes } from "./configs/css/colors";
+
+import { Navbar } from "./ui/components/Navbar/Navbar";
+import { Footer } from "./ui/components/Footer/Footer";
 
 function App() {
+  const [theme, setTheme] = React.useState(themes[0]);
   return (
-    <>
-      <Navbar />
-      <Routes />
-    </>
+    <ThemeProviderContext.Provider value={{ setTheme }}>
+      <ThemeProvider theme={theme}>
+        <GlobalStyles />
+        <Navbar />
+        <Routes />
+        <Footer />
+      </ThemeProvider>
+    </ThemeProviderContext.Provider>
   );
 }
 
