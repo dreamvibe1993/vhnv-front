@@ -13,7 +13,7 @@ import { useTranslation } from "react-i18next";
 
 /*
   TODO:
-  * About
+  * About Section
 */
 
 function App() {

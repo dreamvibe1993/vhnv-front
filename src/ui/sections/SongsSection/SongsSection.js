@@ -59,6 +59,8 @@ const LinksAlphabet = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
+  row-gap: 10px;
 `;
 
 const SongLink = styled(Link)`
