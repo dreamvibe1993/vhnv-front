@@ -8,10 +8,13 @@ import { ThemeProviderContext } from "../../../configs/contexts/theme";
 import { themes } from "../../../configs/css/colors";
 import { Link } from "react-router-dom";
 import { appRoutes } from "../../../configs/app-routes/app-routes";
+import { useTranslation } from "react-i18next";
 
 export const Navbar = () => {
   const theme = useTheme();
+  const { t, i18n } = useTranslation();
   const { setTheme } = React.useContext(ThemeProviderContext);
+
   const [isMenuOpen, setMenuOpen] = React.useState(false);
 
   function toggleMenu() {
@@ -24,13 +27,23 @@ export const Navbar = () => {
     setTheme(themes[index]);
   }
 
+  function changeLanguage() {
+    const languages = ["ru", "en"];
+    const currentLanguage = i18n.language;
+    let index = 0;
+    if (currentLanguage === "ru") index = 1;
+    if (currentLanguage === "en") index = 0;
+    i18n.changeLanguage(languages[index]);
+  }
+
   return (
     <NavbarContainer isMenuOpen={isMenuOpen}>
-      <NavButton to={appRoutes.home.root}>Home</NavButton>
-      <NavButton href="#news">News</NavButton>
-      <NavButton href="#contact">Contact</NavButton>
-      <NavButton href="#about">About</NavButton>
+      <NavButton to={appRoutes.home.root}>{t("common:home")}</NavButton>
+      <NavButton href="#news">{t("common:news")}</NavButton>
+      <NavButton href="#contact">{t("common:contacts")}</NavButton>
+      <NavButton href="#about">{t("common:about")}</NavButton>
       <Buttons>
+        <ChangeLng onClick={changeLanguage}>{i18n.language}</ChangeLng>
         <Colors type="button" onClick={toggleTheme}>
           {theme.id}
         </Colors>
@@ -103,3 +116,5 @@ const Buttons = styled.div`
     border: none;
   }
 `;
+
+const ChangeLng = styled(Colors)``;

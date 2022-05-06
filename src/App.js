@@ -12,10 +12,7 @@ import { Footer } from "./ui/components/Footer/Footer";
 
 /*
   TODO:
-  1) Aria labels?
-  3) Icon
-  4) Languages Support 
-  5) Check meta
+  * About
 */
 
 function App() {

@@ -4,8 +4,10 @@ import { Link } from "react-router-dom";
 import { appRoutes } from "../../../configs/app-routes/app-routes";
 import { useGetAllSongs } from "../../../services/hooks/songs/useGetAllSongs";
 import { Preloader } from "../../details/Preloader/Preloader";
+import { useTranslation } from "react-i18next";
 
 export const SongsNavigation = () => {
+  const { t } = useTranslation();
   const songs = useGetAllSongs();
 
   const sortAlphabeticallyInRussian = (a, b) => {
@@ -29,7 +31,7 @@ export const SongsNavigation = () => {
 
   return (
     <SongsNavigationSection>
-      <SectionTitle>SONGS</SectionTitle>
+      <SectionTitle>{t("common:songs")}</SectionTitle>
       <LinksAlphabet>
         {returnUniqueLetters(songs.sort(sortAlphabeticallyInRussian)).map((letter, index) => {
           return (
@@ -50,6 +52,7 @@ const SongsNavigationSection = styled.section`
 
 const SectionTitle = styled.h2`
   text-align: center;
+  text-transform: uppercase;
 `;
 
 const LinksAlphabet = styled.div`
