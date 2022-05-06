@@ -25,6 +25,7 @@ export const Navbar = () => {
     let index = theme.id;
     if (index > 2) index = 0;
     setTheme(themes[index]);
+    localStorage.setItem("theme", index);
   }
 
   function changeLanguage() {
@@ -34,6 +35,7 @@ export const Navbar = () => {
     if (currentLanguage === "ru") index = 1;
     if (currentLanguage === "en") index = 0;
     i18n.changeLanguage(languages[index]);
+    localStorage.setItem("locale", languages[index]);
   }
 
   return (
