@@ -42,7 +42,7 @@ export const Navbar = () => {
   );
 };
 
-const NavbarContainer = styled.nav`
+const NavbarContainer = styled.header`
   background-color: ${(p) => p.theme.darkest};
   overflow: hidden;
   display: flex;

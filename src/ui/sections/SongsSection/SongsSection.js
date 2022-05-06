@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { appRoutes } from "../../../configs/app-routes/app-routes";
 import { useGetAllSongs } from "../../../services/hooks/songs/useGetAllSongs";
+import { Preloader } from "../../details/Preloader/Preloader";
 
 export const SongsNavigation = () => {
   const songs = useGetAllSongs();
@@ -18,6 +19,13 @@ export const SongsNavigation = () => {
     const firstLetters = songs.map((song) => song.name.slice(0, 1));
     return [...new Set(firstLetters)];
   };
+
+  if (songs.length < 1)
+    return (
+      <PreloaderWrapper>
+        <Preloader />
+      </PreloaderWrapper>
+    );
 
   return (
     <SongsNavigationSection>
@@ -56,7 +64,12 @@ const SongLink = styled(Link)`
   text-align: center;
   text-decoration: none;
   color: inherit;
-  background-color: ${p => p.theme.darkest};
+  background-color: ${(p) => p.theme.darkest};
   font-weight: 700;
   cursor: pointer;
-`
+`;
+
+const PreloaderWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+`;
