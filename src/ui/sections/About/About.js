@@ -15,13 +15,14 @@ export const About = () => {
 
 const AboutSection = styled.section`
   background-color: ${(p) => p.theme.dark};
-  padding: 15px;
+  font-size: 1.6rem;
+  padding: 1.5rem;
   text-align: center;
 `;
 
 const Title = styled.h1`
   font-weight: 900;
-  font-size: 36px;
+  font-size: 3.6rem;
 `;
 
 const Description = styled.p``;

@@ -47,10 +47,12 @@ export const SongsNavigation = () => {
 
 const SongsNavigationSection = styled.section`
   background-color: ${(p) => p.theme.medium};
-  padding: 15px;
+  padding: 1.5rem;
 `;
 
 const SectionTitle = styled.h2`
+  font-size: 2.3rem;
+  margin-bottom: 0.7em;
   text-align: center;
   text-transform: uppercase;
 `;
@@ -60,12 +62,13 @@ const LinksAlphabet = styled.div`
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  row-gap: 10px;
+  row-gap: 1em;
 `;
 
 const SongLink = styled(Link)`
-  padding: 5px;
-  width: 35px;
+  font-size: 1.6rem;
+  padding: 0.3em;
+  width: 3.5rem;
   text-align: center;
   text-decoration: none;
   color: inherit;

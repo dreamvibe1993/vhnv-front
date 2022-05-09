@@ -13,7 +13,14 @@ import { useTranslation } from "react-i18next";
 
 /*
   TODO:
+  * Admin (authorization as admin)
   * About Section
+  * Songs using iframes (for ru is ya music)
+  * Tablets and Desktop layouts
+  * Search by song name
+  * Peace though stradania rubric
+  * Local instagram
+  * ems rems
 */
 
 function App() {

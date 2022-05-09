@@ -8,4 +8,7 @@ export const appRoutes = {
   song: {
     root: "/songs/:letter",
   },
+  admin: {
+    root: "/admin"
+  }
 };

@@ -62,6 +62,7 @@ const NavbarContainer = styled.header`
   overflow: hidden;
   display: flex;
   justify-content: flex-start;
+  font-size: 1.7rem;
   @media (max-width: ${size.mobileL}) {
     justify-content: space-between;
     flex-direction: ${(p) => (p.isMenuOpen ? "column" : "none")};
@@ -82,9 +83,8 @@ const NavbarContainer = styled.header`
 const NavButton = styled(Link)`
   color: ${(p) => p.theme.lightest};
   text-align: center;
-  padding: 14px 16px;
+  padding: 1.5rem;
   text-decoration: none;
-  font-size: 17px;
   &:hover {
     background-color: ${(p) => p.theme.lightest};
     color: ${(p) => p.theme.darkest};
@@ -96,7 +96,7 @@ const NavButton = styled(Link)`
 `;
 
 const Bars = styled.button`
-  padding: 15px 16px;
+  padding: 0.8em 0.9em;
   color: ${(p) => p.theme.lightest};
   background-color: ${(p) => (p.isMenuOpen ? p.theme.darker : p.theme.darkest)};
   @media (min-width: ${size.mobileL}) {
@@ -105,7 +105,7 @@ const Bars = styled.button`
 `;
 
 const Colors = styled.button`
-  padding: 15px 16px;
+  padding: 0.8em 0.9em;
   color: ${(p) => p.theme.lightest};
   background-color: ${(p) => p.theme.darkest};
 `;

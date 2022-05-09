@@ -32,16 +32,16 @@ const FooterContainer = styled.footer`
   background-color: ${(p) => p.theme.darkest};
   color: ${(p) => p.theme.lightest};
   text-align: left;
-  padding: 15px;
-  font-size: 12px;
+  font-size: 1.2rem;
+  padding: 1.3em;
 `;
 
 const Icons = styled.div`
-  font-size: 24px;
+  font-size: 2.4rem;
   width: 50%;
   display: flex;
   justify-content: space-between;
-  padding: 5px 0px;
+  padding: 0.2em 0px;
 `;
 
 const Link = styled.a`

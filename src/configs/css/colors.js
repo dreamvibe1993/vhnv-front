@@ -11,6 +11,8 @@ export const themes = [
     dark: "#495057ff",
     darker: "#343a40ff",
     darkest: "#212529ff",
+    error: "red",
+    success: "green",
   },
   {
     name: "green",
@@ -24,6 +26,8 @@ export const themes = [
     dark: "#2d6a4fff",
     darker: "#1b4332ff",
     darkest: "#081c15ff",
+    error: "yellow",
+    success: "#95d5b2ff",
   },
   {
     name: "white",
@@ -37,5 +41,7 @@ export const themes = [
     dark: "#dee2e6ff",
     darker: "#e9ecefff",
     darkest: "#f8f9faff",
+    error: "red",
+    success: "green",
   },
 ];
