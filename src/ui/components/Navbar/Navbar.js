@@ -6,12 +6,13 @@ import { FaBars } from "react-icons/fa";
 import { size } from "../../../configs/css/breakpoints";
 import { ThemeProviderContext } from "../../../configs/contexts/theme";
 import { themes } from "../../../configs/css/colors";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { appRoutes } from "../../../configs/app-routes/app-routes";
 import { useTranslation } from "react-i18next";
 
 export const Navbar = () => {
   const theme = useTheme();
+  const history = useHistory();
   const { t, i18n } = useTranslation();
   const { setTheme } = React.useContext(ThemeProviderContext);
 
@@ -38,9 +39,28 @@ export const Navbar = () => {
     localStorage.setItem("locale", languages[index]);
   }
 
+  const intervalID = React.useRef(0);
+
+  function startCountdown() {
+    let counter = 0;
+    intervalID.current = setInterval(() => {
+      counter = counter + 1;
+      if (counter > 2) {
+        clearInterval(intervalID.current);
+        history.push(appRoutes.admin.root);
+      }
+    }, 1000);
+  }
+
+  function finishCountdown() {
+    clearInterval(intervalID.current);
+  }
+
   return (
     <NavbarContainer isMenuOpen={isMenuOpen}>
-      <NavButton to={appRoutes.home.root}>{t("common:home")}</NavButton>
+      <NavButton to={appRoutes.home.root} onTouchStart={startCountdown} onTouchEnd={finishCountdown}>
+        {t("common:home")}
+      </NavButton>
       <NavButton href="#news">{t("common:news")}</NavButton>
       <NavButton href="#contact">{t("common:contacts")}</NavButton>
       <NavButton href="#about">{t("common:about")}</NavButton>
@@ -63,6 +83,7 @@ const NavbarContainer = styled.header`
   display: flex;
   justify-content: flex-start;
   font-size: 1.7rem;
+  position: relative;
   @media (max-width: ${size.mobileL}) {
     justify-content: space-between;
     flex-direction: ${(p) => (p.isMenuOpen ? "column" : "none")};
@@ -111,6 +132,7 @@ const Colors = styled.button`
 `;
 
 const Buttons = styled.div`
+  height: calc(100% / 4);
   background-color: ${(p) => p.theme.darkest};
   position: absolute;
   right: 0;

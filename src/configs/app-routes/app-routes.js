@@ -10,5 +10,8 @@ export const appRoutes = {
   },
   admin: {
     root: "/admin"
+  },
+  login: {
+    root: "/login"
   }
 };
