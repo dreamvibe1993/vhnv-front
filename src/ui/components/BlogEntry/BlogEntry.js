@@ -85,7 +85,8 @@ const PhotoSection = styled.div`
   height: 40vh;
   grid-template-rows: repeat(3, auto);
   grid-template-columns: repeat(2, auto);
-  margin-bottom: 1rem;
+  justify-content: center;
+  background-color: ${(p) => p.theme.dark};
   & > * {
     &:first-child {
       grid-column-start: 1;

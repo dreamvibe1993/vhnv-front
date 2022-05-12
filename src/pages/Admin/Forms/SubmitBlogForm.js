@@ -138,7 +138,8 @@ const AddPhotosButton = styled.div`
   width: 100%;
   overflow: hidden;
   position: relative;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: ${(p) => p.theme.light};
+  color: ${(p) => p.theme.darkest};
   input {
     opacity: 0;
   }
