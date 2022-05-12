@@ -94,6 +94,7 @@ const NavbarContainer = styled.header`
     }
     a:not(:first-child) {
       display: ${(p) => (p.isMenuOpen ? "block" : "none")};
+      z-index: 10;
     }
   }
   * {
@@ -106,6 +107,7 @@ const NavButton = styled(Link)`
   text-align: center;
   padding: 1.5rem;
   text-decoration: none;
+  position: relative;
   &:hover {
     background-color: ${(p) => p.theme.lightest};
     color: ${(p) => p.theme.darkest};
@@ -132,7 +134,7 @@ const Colors = styled.button`
 `;
 
 const Buttons = styled.div`
-  height: calc(100% / 4);
+  height: 100%;
   background-color: ${(p) => p.theme.darkest};
   position: absolute;
   right: 0;

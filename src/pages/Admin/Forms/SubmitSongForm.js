@@ -33,7 +33,7 @@ export const SubmitSongForm = () => {
   });
 
   return (
-    <Form onSubmit={formik.handleSubmit}>
+    <Form onSubmit={formik.handleSubmit} id="new-song">
       <AppLable htmlFor="band">band</AppLable>
       <AppInput id="band" name="band" type="text" onChange={formik.handleChange} value={formik.values.band} />
       {formik.touched.band && formik.errors.band ? <FormErrorText>{formik.errors.band}</FormErrorText> : null}

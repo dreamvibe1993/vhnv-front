@@ -1,6 +1,6 @@
-import { useFormik } from "formik";
 import React from "react";
 import styled from "styled-components";
+import { useFormik } from "formik";
 import { login, logout } from "../../api/auth";
 import { AuthContext } from "../../configs/contexts/auth";
 import { apassSchema } from "../../models/yup-validation-schemas/yup-song-schema";
@@ -20,9 +20,8 @@ export const AdminLogin = () => {
     onSubmit: (values) => {
       setAppLoading(true);
       login(values)
-        .then((res) => {
+        .then(() => {
           setIsAuth(true);
-          console.log(res);
         })
         .catch((e) => {
           setIsAuth(false);
