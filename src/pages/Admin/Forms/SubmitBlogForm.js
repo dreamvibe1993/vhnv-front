@@ -12,10 +12,12 @@ import { compressPhotos } from "../../../services/compression/compressPhotos";
 import { Preloader } from "../../../ui/details/Preloader/Preloader";
 import { updatePhotos } from "../../../api/photos";
 import { AiOutlineDelete } from "react-icons/ai";
+import { postBlog } from "../../../api/blog";
 
 export const SubmitBlogForm = () => {
   const [photos, setPhotos] = React.useState([]);
   const [photosLoading, setPhotosLoading] = React.useState(false);
+  const [contentLoading, setContentLoading] = React.useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -25,12 +27,23 @@ export const SubmitBlogForm = () => {
       content: "",
     },
     validationSchema: yupBlogSchema,
-    onSubmit: (values) => {
-      alert("success!");
-      console.log(values, photos);
-      updatePhotos(photos).then((res) => {
-        console.log(res);
-      });
+    onSubmit: async (values) => {
+      setContentLoading(true);
+      const response = await updatePhotos(photos.slice(0, 4));
+      const blog = { ...values, photos: response.data.photos };
+      postBlog(blog)
+        .then(() => {
+          alert("Blog successfully added.");
+          formik.resetForm();
+          setPhotos([]);
+        })
+        .catch((e) => {
+          console.error(e);
+          alert("Sorry, something went wrong.");
+        })
+        .finally(() => {
+          setContentLoading(false);
+        });
     },
   });
 
@@ -50,6 +63,14 @@ export const SubmitBlogForm = () => {
   const deletePhoto = (id) => {
     setPhotos((prev) => prev.filter((ph) => ph.id !== id));
   };
+
+  if (contentLoading) {
+    return (
+      <Centering>
+        <Preloader />
+      </Centering>
+    );
+  }
 
   return (
     <Form onSubmit={formik.handleSubmit} id="new-blog">
@@ -167,4 +188,8 @@ const MarginTopUtility = styled.div`
   margin-top: 3rem;
   display: flex;
   justify-content: center;
+`;
+
+const Centering = styled(MarginTopUtility)`
+  margin: 0;
 `;

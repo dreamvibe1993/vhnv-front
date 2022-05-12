@@ -51,8 +51,7 @@ const SongsNavigationSection = styled.section`
 `;
 
 const SectionTitle = styled.h2`
-  font-size: 2.3rem;
-  margin-bottom: 0.7em;
+  font-size: 3.6rem;
   text-align: center;
   text-transform: uppercase;
 `;

@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "styled-components";
 import { Form } from "../../../ui/styled-components/forms/Form";
 import { AppButton } from "../../../ui/styled-components/buttons/AppButton";
@@ -8,9 +9,12 @@ import { useFormik } from "formik";
 import { yupSongSchema } from "../../../models/yup-validation-schemas/yup-song-schema";
 import { FormErrorText } from "../../../ui/styled-components/forms/FormErrorText";
 import { usePostSong } from "../../../services/hooks/songs/usePostSong";
+import { Preloader } from "../../../ui/details/Preloader/Preloader";
 
 export const SubmitSongForm = () => {
   const postSong = usePostSong();
+  const [contentLoading, setContentLoading] = React.useState(false);
+
   const formik = useFormik({
     initialValues: {
       band: "",
@@ -20,17 +24,28 @@ export const SubmitSongForm = () => {
     },
     validationSchema: yupSongSchema,
     onSubmit: (values) => {
+      setContentLoading(true);
       postSong(values)
         .then((res) => {
-          console.log(res);
-          alert("success!");
+          alert("New song successfully added!");
         })
         .catch((e) => {
           console.error(e);
-          alert("fail");
+          alert("Sorry, something went wrong!");
+        })
+        .finally(() => {
+          setContentLoading(false);
         });
     },
   });
+
+  if (contentLoading) {
+    return (
+      <Centering>
+        <Preloader />
+      </Centering>
+    );
+  }
 
   return (
     <Form onSubmit={formik.handleSubmit} id="new-song">
@@ -60,4 +75,8 @@ const MarginTopUtility = styled.div`
   margin-top: 3rem;
   display: flex;
   justify-content: center;
+`;
+
+const Centering = styled(MarginTopUtility)`
+  margin: 0;
 `;

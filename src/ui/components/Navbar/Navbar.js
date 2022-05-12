@@ -1,5 +1,5 @@
 import React from "react";
-import styled, { useTheme } from "styled-components";
+import styled, { css, useTheme } from "styled-components";
 
 import { FaBars } from "react-icons/fa";
 
@@ -61,7 +61,7 @@ export const Navbar = () => {
       <NavButton to={appRoutes.home.root} onTouchStart={startCountdown} onTouchEnd={finishCountdown}>
         {t("common:home")}
       </NavButton>
-      <NavButton href="#news">{t("common:news")}</NavButton>
+      <NavButtonAnchor href="/#graphomania">{t("blog:graphomania")}</NavButtonAnchor>
       <NavButton href="#contact">{t("common:contacts")}</NavButton>
       <NavButton href="#about">{t("common:about")}</NavButton>
       <Buttons>
@@ -102,12 +102,13 @@ const NavbarContainer = styled.header`
   }
 `;
 
-const NavButton = styled(Link)`
+const NavButtStyle = css`
   color: ${(p) => p.theme.lightest};
   text-align: center;
   padding: 1.5rem;
   text-decoration: none;
   position: relative;
+  text-transform: capitalize;
   &:hover {
     background-color: ${(p) => p.theme.lightest};
     color: ${(p) => p.theme.darkest};
@@ -116,6 +117,14 @@ const NavButton = styled(Link)`
     background-color: ${(p) => p.theme.medium};
     color: ${(p) => p.theme.lightest};
   }
+`;
+
+const NavButton = styled(Link)`
+  ${NavButtStyle}
+`;
+
+const NavButtonAnchor = styled.a`
+  ${NavButtStyle}
 `;
 
 const Bars = styled.button`
