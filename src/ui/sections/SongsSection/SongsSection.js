@@ -5,6 +5,7 @@ import { appRoutes } from "../../../configs/app-routes/app-routes";
 import { useGetAllSongs } from "../../../services/hooks/songs/useGetAllSongs";
 import { Preloader } from "../../details/Preloader/Preloader";
 import { useTranslation } from "react-i18next";
+import { AppSectionTitle1 } from "../../styled-components/titles/AppSectionTitle1";
 
 export const SongsNavigation = () => {
   const { t } = useTranslation();
@@ -31,7 +32,9 @@ export const SongsNavigation = () => {
 
   return (
     <SongsNavigationSection>
-      <SectionTitle>{t("common:songs")}</SectionTitle>
+      <SectionTitleWrapper>
+        <AppSectionTitle1>{t("common:songs")}</AppSectionTitle1>
+      </SectionTitleWrapper>
       <LinksAlphabet>
         {returnUniqueLetters(songs.sort(sortAlphabeticallyInRussian)).map((letter, index) => {
           return (
@@ -50,10 +53,9 @@ const SongsNavigationSection = styled.section`
   padding: 1.5rem;
 `;
 
-const SectionTitle = styled.h2`
-  font-size: 3.6rem;
+const SectionTitleWrapper = styled.div`
   text-align: center;
-  text-transform: uppercase;
+  margin-bottom: 1.5rem;
 `;
 
 const LinksAlphabet = styled.div`
@@ -65,15 +67,16 @@ const LinksAlphabet = styled.div`
 `;
 
 const SongLink = styled(Link)`
-  font-size: 1.6rem;
+  font-size: 2rem;
   padding: 0.3em;
   width: 3.5rem;
   text-align: center;
   text-decoration: none;
   color: inherit;
   background-color: ${(p) => p.theme.darkest};
-  font-weight: 700;
   cursor: pointer;
+  font-family: "Alice", serif;
+  text-transform: uppercase;
 `;
 
 const PreloaderWrapper = styled.div`

@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useGetAllBlogs } from "../../../services/hooks/blogs/useGetAllBlogs";
 import { BlogEntry } from "../../components/BlogEntry/BlogEntry";
 import { Preloader } from "../../details/Preloader/Preloader";
+import { AppSectionTitle1 } from "../../styled-components/titles/AppSectionTitle1";
 
 export const BlogsSection = () => {
   const { t } = useTranslation();
@@ -20,7 +21,9 @@ export const BlogsSection = () => {
   if (blogs.length < 1) {
     return (
       <BlogsNavigationSection>
-        <Title>{t("blog:graphomania")}</Title>
+        <SectionTitleWrapper>
+          <AppSectionTitle1>{t("blog:graphomania")}</AppSectionTitle1>
+        </SectionTitleWrapper>
         <Subtitle>{t("blog:noBlogs")}</Subtitle>
       </BlogsNavigationSection>
     );
@@ -28,7 +31,9 @@ export const BlogsSection = () => {
 
   return (
     <BlogsNavigationSection id="#graphomania">
-      <Title>{t("blog:graphomania")}</Title>
+      <SectionTitleWrapper>
+        <AppSectionTitle1>{t("blog:graphomania")}</AppSectionTitle1>
+      </SectionTitleWrapper>
       {blogs.map((blog) => {
         return <BlogEntry key={blog._id} blog={blog} />;
       })}
@@ -41,11 +46,9 @@ const PreloaderWrapper = styled.div`
   justify-content: center;
 `;
 
-const Title = styled.h2`
-  display: block;
+const SectionTitleWrapper = styled.div`
   text-align: center;
-  font-size: 3.6rem;
-  text-transform: uppercase;
+  margin-bottom: 1.5rem;
 `;
 
 const Subtitle = styled.p`
