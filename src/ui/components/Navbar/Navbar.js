@@ -61,7 +61,7 @@ export const Navbar = () => {
       <NavButton to={appRoutes.home.root} onTouchStart={startCountdown} onTouchEnd={finishCountdown}>
         {t("common:home")}
       </NavButton>
-      <NavButtonAnchor href="/#graphomania">{t("blog:graphomania")}</NavButtonAnchor>
+      <NavButtonAnchor href="#graphomania">{t("blog:graphomania")}</NavButtonAnchor>
       <NavButton href="#contact">{t("common:contacts")}</NavButton>
       <NavButton href="#about">{t("common:about")}</NavButton>
       <Buttons>
@@ -109,9 +109,8 @@ const NavButtStyle = css`
   text-decoration: none;
   position: relative;
   text-transform: capitalize;
-  &:hover {
-    background-color: ${(p) => p.theme.lightest};
-    color: ${(p) => p.theme.darkest};
+  &:visited {
+    color: inherit;
   }
   &:active {
     background-color: ${(p) => p.theme.medium};

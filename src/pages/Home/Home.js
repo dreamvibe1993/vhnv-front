@@ -15,6 +15,6 @@ export const Home = () => {
 };
 
 const HomeContainer = styled.main`
-  height: calc(100vh - 115px);
+  height: calc(100vh - 120px);
   overflow-y: auto;
 `;

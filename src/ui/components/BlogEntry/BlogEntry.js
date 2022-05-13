@@ -99,6 +99,7 @@ const PhotoSection = styled.div`
 
 const PhotoSectionCell = styled.div`
   overflow: hidden;
+  cursor: pointer;
 `;
 
 const BlogContentWrapper = styled.div`

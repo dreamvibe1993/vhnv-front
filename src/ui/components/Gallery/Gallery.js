@@ -23,12 +23,14 @@ export const Gallery = ({ src, onClose = () => {} }) => {
   };
 
   const handleStart = (e) => {
+    e.preventDefault();
     TouchStartCoordsX.current = e.clientX - x || e?.touches[0]?.clientX - x;
     TouchStartCoordsY.current = e.clientY - y || e?.touches[0]?.clientY - y;
     setMouseKeyPressed(true);
   };
 
   const handleMove = (e) => {
+    e.preventDefault();
     if (!picRef.current) return;
     if (!isMouseKeyPressed) return;
     const clientX = e.clientX || e?.touches[0]?.clientX;
@@ -106,6 +108,7 @@ const PreloaderContainer = styled.div`
 `;
 
 const PicContainer = styled.div`
+  transition: transform 0.05s linear;
   cursor: grab;
   height: 100%;
   &:active {
