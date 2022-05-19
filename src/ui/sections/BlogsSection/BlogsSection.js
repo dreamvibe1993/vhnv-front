@@ -1,3 +1,4 @@
+import { Box, Flex, Heading, Spinner, StackDivider, Text, VStack } from "@chakra-ui/react";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
@@ -12,50 +13,30 @@ export const BlogsSection = () => {
 
   if (blogs === 0) {
     return (
-      <PreloaderWrapper>
-        <Preloader />
-      </PreloaderWrapper>
+      <Flex justify="center">
+        <Spinner />
+      </Flex>
     );
   }
 
   if (blogs.length < 1) {
     return (
-      <BlogsNavigationSection>
-        <SectionTitleWrapper>
-          <AppSectionTitle1>{t("blog:graphomania")}</AppSectionTitle1>
-        </SectionTitleWrapper>
-        <Subtitle>{t("blog:noBlogs")}</Subtitle>
-      </BlogsNavigationSection>
+      <Box>
+        <Heading>{t("blog:graphomania").toUpperCase()}</Heading>
+        <Text>{t("blog:noBlogs")}</Text>
+      </Box>
     );
   }
 
   return (
-    <BlogsNavigationSection id="#graphomania">
-      <SectionTitleWrapper>
-        <AppSectionTitle1>{t("blog:graphomania")}</AppSectionTitle1>
-      </SectionTitleWrapper>
-      {blogs.map((blog) => {
-        return <BlogEntry key={blog._id} blog={blog} />;
-      })}
-    </BlogsNavigationSection>
+    <Box id="#graphomania" p="1rem">
+      <Heading align="center">{t("blog:graphomania").toUpperCase()}</Heading>
+      <VStack spacing={4}>
+        {blogs.map((blog) => {
+          return <BlogEntry key={blog._id} blog={blog} />;
+        })}
+      </VStack>
+    </Box>
   );
 };
 
-const PreloaderWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
-const SectionTitleWrapper = styled.div`
-  text-align: center;
-  margin-bottom: 1.5rem;
-`;
-
-const Subtitle = styled.p`
-  text-align: center;
-`;
-
-const BlogsNavigationSection = styled.section`
-  background-color: ${(p) => p.theme.lessDark};
-  padding: 1.5rem;
-`;

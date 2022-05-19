@@ -6,6 +6,7 @@ import { useGetAllSongs } from "../../../services/hooks/songs/useGetAllSongs";
 import { Preloader } from "../../details/Preloader/Preloader";
 import { useTranslation } from "react-i18next";
 import { AppSectionTitle1 } from "../../styled-components/titles/AppSectionTitle1";
+import { Box, Container, Flex, Heading, Spinner } from "@chakra-ui/react";
 
 export const SongsNavigation = () => {
   const { t } = useTranslation();
@@ -25,17 +26,17 @@ export const SongsNavigation = () => {
 
   if (songs.length < 1)
     return (
-      <PreloaderWrapper>
-        <Preloader />
-      </PreloaderWrapper>
+      <Box w="100%">
+        <Flex justify="center" wrap="wrap">
+          <Spinner />
+        </Flex>
+      </Box>
     );
 
   return (
-    <SongsNavigationSection>
-      <SectionTitleWrapper>
-        <AppSectionTitle1>{t("common:songs")}</AppSectionTitle1>
-      </SectionTitleWrapper>
-      <LinksAlphabet>
+    <Box w="100%" p="1rem">
+      <Heading align="center">{t("common:songs").toUpperCase()}</Heading>
+      <Flex justify="center" wrap="wrap">
         {returnUniqueLetters(songs.sort(sortAlphabeticallyInRussian)).map((letter, index) => {
           return (
             <SongLink key={letter + index} to={`${appRoutes.songs.root}/${letter}`}>
@@ -43,33 +44,16 @@ export const SongsNavigation = () => {
             </SongLink>
           );
         })}
-      </LinksAlphabet>
-    </SongsNavigationSection>
+      </Flex>
+    </Box>
   );
 };
-
-const SongsNavigationSection = styled.section`
-  background-color: ${(p) => p.theme.medium};
-  padding: 1.5rem;
-`;
-
-const SectionTitleWrapper = styled.div`
-  text-align: center;
-  margin-bottom: 1.5rem;
-`;
-
-const LinksAlphabet = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  row-gap: 1em;
-`;
 
 const SongLink = styled(Link)`
   font-size: 2rem;
   padding: 0.3em;
   width: 3.5rem;
+  margin: 0.3rem;
   text-align: center;
   text-decoration: none;
   color: inherit;

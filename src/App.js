@@ -1,6 +1,7 @@
 import React from "react";
 import { ThemeProviderContext } from "./configs/contexts/theme";
 import { ThemeProvider } from "styled-components";
+import { ChakraProvider } from "@chakra-ui/react";
 
 import { Routes } from "./Routes";
 import { GlobalStyles } from "./GlobalStyles";
@@ -11,6 +12,7 @@ import { Navbar } from "./ui/components/Navbar/Navbar";
 import { Footer } from "./ui/components/Footer/Footer";
 import { useTranslation } from "react-i18next";
 import { AuthWrapper } from "./ui/service/hocs/AuthWrapper/AuthWrapper";
+import chakraTheme from "./configs/css/chakra-theme";
 
 /*
   TODO:
@@ -42,16 +44,18 @@ function App() {
   }, []);
 
   return (
-    <ThemeProviderContext.Provider value={{ setTheme }}>
-      <ThemeProvider theme={theme}>
-        <GlobalStyles />
-        <AuthWrapper>
-          <Navbar />
-          <Routes />
-          <Footer />
-        </AuthWrapper>
-      </ThemeProvider>
-    </ThemeProviderContext.Provider>
+    <ChakraProvider theme={chakraTheme}>
+      <ThemeProviderContext.Provider value={{ setTheme }}>
+        <ThemeProvider theme={theme}>
+          <GlobalStyles />
+          <AuthWrapper>
+            <Navbar />
+            <Routes />
+            <Footer />
+          </AuthWrapper>
+        </ThemeProvider>
+      </ThemeProviderContext.Provider>
+    </ChakraProvider>
   );
 }
 

@@ -1,20 +1,15 @@
+import { StackDivider, VStack } from "@chakra-ui/react";
 import React from "react";
-import styled from "styled-components";
 import { About } from "../../ui/sections/About/About";
 import { BlogsSection } from "../../ui/sections/BlogsSection/BlogsSection";
 import { SongsNavigation } from "../../ui/sections/SongsSection/SongsSection";
 
 export const Home = () => {
   return (
-    <HomeContainer>
+    <VStack divider={<StackDivider borderColor="gray.200" />} align="stretch">
       <About />
       <SongsNavigation />
       <BlogsSection />
-    </HomeContainer>
+    </VStack>
   );
 };
-
-const HomeContainer = styled.main`
-  height: calc(100vh - 120px);
-  overflow-y: auto;
-`;

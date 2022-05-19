@@ -1,11 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
-import { AppSongTitle2 } from "../../styled-components/titles/AppSongTitle2";
 import { Gallery } from "../Gallery/Gallery";
 import { AuthContext } from "../../../configs/contexts/auth";
-import { AppButton } from "../../styled-components/buttons/AppButton";
 import { deleteBlog } from "../../../api/blog";
+import { Box, Button, Flex, Grid, GridItem, Heading, Image, StackDivider, Text, VStack } from "@chakra-ui/react";
 
 export const BlogEntry = ({ blog }) => {
   const { isAuth } = React.useContext(AuthContext);
@@ -35,58 +34,47 @@ export const BlogEntry = ({ blog }) => {
   return (
     <>
       {photoSrc && <Gallery src={photoSrc} onClose={hidePhoto} />}
-      <BlogEntryContainer>
-        <AppSongTitle2>{blog.title}</AppSongTitle2>
+      <Box p="1rem" mr="1rem" ml="1rem" boxShadow='md' w="100%">
+        <Heading>{blog.title}</Heading>
         {Array.isArray(blog.photos) && blog.photos.length > 0 && (
-          <PhotoSection>
+          <PhotoSection templateRows="repeat(3, auto)" templateColumns="repeat(2, auto)" justifyContent="center" h="40vh">
             {blog.photos.map((phSrc) => {
               return (
                 <PhotoSectionCell key={phSrc} onClick={() => showPhoto(phSrc)}>
-                  <BlogPhoto src={phSrc} />
+                  <Image src={phSrc} w="100%" h="100%" objectFit="cover"/>
                 </PhotoSectionCell>
               );
             })}
           </PhotoSection>
         )}
-        <BlogContentWrapper>
-          <Row>
-            <CredsWrapper>{blog.author}</CredsWrapper>
-            <InformationTitleWrapper>{t("blog:by")}</InformationTitleWrapper>
-          </Row>
-          <BlogContent>
+        <VStack divider={<StackDivider borderColor="gray.200" />}>
+          <Flex w="100%" justify="space-between">
+            <Text>{blog.author}</Text>
+            <Heading size='xs' color="gray.300">{t("blog:by")}</Heading>
+          </Flex>
+          <Text>
             <span>{blog.content}</span>
-          </BlogContent>
-          <Row>
-            <CredsWrapper>{new Date(blog.date).toDateString()}</CredsWrapper>
-            <InformationTitleWrapper>{t("blog:date")}</InformationTitleWrapper>
-          </Row>
+          </Text>
+          <Flex w="100%" justify="space-between">
+            <Text>{new Date(blog.date).toDateString()}</Text>
+            <Heading size='xs' color="gray.300">{t("blog:date")}</Heading>
+          </Flex>
           {isAuth && (
-            <Row>
-              <AppButton type="button" onClick={() => deleteThisBlog(blog._id)}>
-                DELETE
-              </AppButton>
-            </Row>
+            <Flex w="100%">
+              <Button type="button" onClick={() => deleteThisBlog(blog._id)} variant="outline">
+                Delete
+              </Button>
+            </Flex>
           )}
-        </BlogContentWrapper>
-      </BlogEntryContainer>
+        </VStack>
+      </Box>
     </>
   );
 };
 
-const BlogPhoto = styled.img`
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
-`;
 
-const PhotoSection = styled.div`
-  display: grid;
-  width: 100%;
-  height: 40vh;
-  grid-template-rows: repeat(3, auto);
-  grid-template-columns: repeat(2, auto);
-  justify-content: center;
-  background-color: ${(p) => p.theme.dark};
+const PhotoSection = styled(Grid)`
+  margin: 1rem 0px;
   & > * {
     &:first-child {
       grid-column-start: 1;
@@ -97,38 +85,7 @@ const PhotoSection = styled.div`
   }
 `;
 
-const PhotoSectionCell = styled.div`
+const PhotoSectionCell = styled(GridItem)`
   overflow: hidden;
   cursor: pointer;
-`;
-
-const BlogContentWrapper = styled.div`
-  background-color: ${(p) => p.theme.dark};
-  margin-bottom: 0.5rem;
-`;
-
-const Row = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem;
-`;
-
-const InformationTitleWrapper = styled.h5`
-  opacity: 0.5;
-`;
-
-const CredsWrapper = styled.h3``;
-
-const BlogEntryContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  /* background-color: ${(p) => p.theme.darkest}; */
-`;
-
-const BlogContent = styled.div`
-  padding: 10px;
-  margin-bottom: 0.5rem;
-  font-size: 2rem;
-  /* border-top: 1px solid ; */
 `;
