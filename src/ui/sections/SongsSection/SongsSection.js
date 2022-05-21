@@ -36,7 +36,7 @@ export const SongsNavigation = () => {
       <Wrap justify="center" spacing={5} mt={5}>
         {returnUniqueLetters(songs.sort(sortAlphabeticallyInRussian)).map((letter, index) => {
           return (
-            <Button key={letter + index} as={Link} to={`${appRoutes.songs.root}/${letter}`}>
+            <Button key={letter + index} as={Link} to={`${appRoutes.songs.root}/${letter}`} textTransform="lowercase">
               {letter}
             </Button>
           );

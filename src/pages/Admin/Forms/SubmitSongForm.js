@@ -1,15 +1,18 @@
 import React from "react";
-import styled from "styled-components";
-import { Form } from "../../../ui/styled-components/forms/Form";
-import { AppButton } from "../../../ui/styled-components/buttons/AppButton";
-import { AppInput } from "../../../ui/styled-components/inputs/AppInput";
-import { AppLable } from "../../../ui/styled-components/labels/AppLabel";
-import { AppTextarea } from "../../../ui/styled-components/inputs/AppTextarea";
 import { useFormik } from "formik";
 import { yupSongSchema } from "../../../models/yup-validation-schemas/yup-song-schema";
-import { FormErrorText } from "../../../ui/styled-components/forms/FormErrorText";
 import { usePostSong } from "../../../services/hooks/songs/usePostSong";
-import { Preloader } from "../../../ui/details/Preloader/Preloader";
+import {
+  Button,
+  Flex,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Input,
+  Spinner,
+  Textarea,
+  VStack,
+} from "@chakra-ui/react";
 
 export const SubmitSongForm = () => {
   const postSong = usePostSong();
@@ -41,42 +44,42 @@ export const SubmitSongForm = () => {
 
   if (contentLoading) {
     return (
-      <Centering>
-        <Preloader />
-      </Centering>
+      <Flex justify={"center"}>
+        <Spinner />
+      </Flex>
     );
   }
 
   return (
-    <Form onSubmit={formik.handleSubmit} id="new-song">
-      <AppLable htmlFor="band">band</AppLable>
-      <AppInput id="band" name="band" type="text" onChange={formik.handleChange} value={formik.values.band} />
-      {formik.touched.band && formik.errors.band ? <FormErrorText>{formik.errors.band}</FormErrorText> : null}
+    <form onSubmit={formik.handleSubmit} id="new-song">
+      <VStack p={4}>
+        <FormControl isInvalid={formik.touched.band && formik.errors.band}>
+          <FormLabel htmlFor="band">band</FormLabel>
+          <Input id="band" name="band" type="text" onChange={formik.handleChange} value={formik.values.band} />
+          <FormErrorMessage>{formik.errors.band}</FormErrorMessage>
+        </FormControl>
 
-      <AppLable htmlFor="name">name</AppLable>
-      <AppInput id="name" name="name" type="text" onChange={formik.handleChange} value={formik.values.name} />
-      {formik.touched.name && formik.errors.name ? <FormErrorText>{formik.errors.name}</FormErrorText> : null}
+        <FormControl isInvalid={formik.touched.name && formik.errors.name}>
+          <FormLabel htmlFor="name">name</FormLabel>
+          <Input id="name" name="name" type="text" onChange={formik.handleChange} value={formik.values.name} />
+          <FormErrorMessage>{formik.errors.name}</FormErrorMessage>
+        </FormControl>
 
-      <AppLable htmlFor="year">year</AppLable>
-      <AppInput id="year" name="year" type="text" onChange={formik.handleChange} value={formik.values.year} />
-      {formik.touched.year && formik.errors.year ? <FormErrorText>{formik.errors.year}</FormErrorText> : null}
+        <FormControl isInvalid={formik.touched.year && formik.errors.year}>
+          <FormLabel htmlFor="year">year</FormLabel>
+          <Input id="year" name="year" type="text" onChange={formik.handleChange} value={formik.values.year} />
+          <FormErrorMessage>{formik.errors.year}</FormErrorMessage>
+        </FormControl>
 
-      <AppLable htmlFor="lyrics">lyrics</AppLable>
-      <AppTextarea id="lyrics" name="lyrics" type="text" onChange={formik.handleChange} value={formik.values.lyrics} />
-      {formik.touched.lyrics && formik.errors.lyrics ? <FormErrorText>{formik.errors.lyrics}</FormErrorText> : null}
-      <MarginTopUtility>
-        <AppButton type="submit">submit</AppButton>
-      </MarginTopUtility>
-    </Form>
+        <FormControl isInvalid={formik.touched.lyrics && formik.errors.lyrics}>
+          <FormLabel htmlFor="lyrics">lyrics</FormLabel>
+          <Textarea id="lyrics" name="lyrics" type="text" onChange={formik.handleChange} value={formik.values.lyrics} />
+          <FormErrorMessage>{formik.errors.lyrics}</FormErrorMessage>
+        </FormControl>
+        <Button type="submit" width={"full"}>
+          submit
+        </Button>
+      </VStack>
+    </form>
   );
 };
-
-const MarginTopUtility = styled.div`
-  margin-top: 3rem;
-  display: flex;
-  justify-content: center;
-`;
-
-const Centering = styled(MarginTopUtility)`
-  margin: 0;
-`;

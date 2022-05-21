@@ -1,3 +1,4 @@
+import { Box, Center, Flex, StackDivider, VStack } from "@chakra-ui/react";
 import React from "react";
 import { Redirect } from "react-router-dom";
 import styled from "styled-components";
@@ -17,30 +18,20 @@ export const Admin = () => {
   if (!isAuth) return <Redirect to={appRoutes.login.root} />;
 
   return (
-    <AdminContainer>
+    <VStack divider={<StackDivider borderColor="gray.200" />} w="100vw">
       <AppToolbar>
         <AppButtonLink href="#new-song">new song</AppButtonLink>
         <AppButtonLink href="#new-blog">new blog</AppButtonLink>
         <AppButton type="button">new insta</AppButton>
       </AppToolbar>
-      <hr />
-      <MarginUtilWrapper>
+      <Box w="100vw">
         <AppSongTitle2>New Song</AppSongTitle2>
-      </MarginUtilWrapper>
-      <SubmitSongForm />
-      <hr />
-      <MarginUtilWrapper>
+        <SubmitSongForm />
+      </Box>
+      <Box w="100vw">
         <AppSongTitle2>New Blog</AppSongTitle2>
-      </MarginUtilWrapper>
-      <SubmitBlogForm />
-    </AdminContainer>
+        <SubmitBlogForm />
+      </Box>
+    </VStack>
   );
 };
-
-const MarginUtilWrapper = styled.div`
-  margin: 0px 15px;
-`;
-
-const AdminContainer = styled.div`
-  min-height: calc(100vh - 6.4rem - 5.5rem);
-`;

@@ -1,18 +1,25 @@
 import React from "react";
 import styled from "styled-components";
-import { Form } from "../../../ui/styled-components/forms/Form";
-import { AppButton } from "../../../ui/styled-components/buttons/AppButton";
-import { AppInput } from "../../../ui/styled-components/inputs/AppInput";
-import { AppLable } from "../../../ui/styled-components/labels/AppLabel";
-import { AppTextarea } from "../../../ui/styled-components/inputs/AppTextarea";
 import { useFormik } from "formik";
-import { FormErrorText } from "../../../ui/styled-components/forms/FormErrorText";
 import { yupBlogSchema } from "../../../models/yup-validation-schemas/yup-blog-schema";
 import { compressPhotos } from "../../../services/compression/compressPhotos";
-import { Preloader } from "../../../ui/details/Preloader/Preloader";
 import { updatePhotos } from "../../../api/photos";
-import { AiOutlineDelete } from "react-icons/ai";
 import { postBlog } from "../../../api/blog";
+import {
+  Box,
+  Button,
+  Flex,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Input,
+  Spinner,
+  Textarea,
+  useColorModeValue,
+  VStack,
+  Wrap,
+} from "@chakra-ui/react";
+import { FaTrash } from "react-icons/fa";
 
 export const SubmitBlogForm = () => {
   const [photos, setPhotos] = React.useState([]);
@@ -64,73 +71,88 @@ export const SubmitBlogForm = () => {
     setPhotos((prev) => prev.filter((ph) => ph.id !== id));
   };
 
+  const cvPhotoBox = useColorModeValue("gray.200", "gray.700");
+  const cvPhoto = useColorModeValue("gray.300", "gray.800");
+
   if (contentLoading) {
     return (
-      <Centering>
-        <Preloader />
-      </Centering>
+      <Flex justify={"center"}>
+        <Spinner />
+      </Flex>
     );
   }
 
   return (
-    <Form onSubmit={formik.handleSubmit} id="new-blog">
-      <AppLable htmlFor="title">title</AppLable>
-      <AppInput id="title" name="title" type="text" onChange={formik.handleChange} value={formik.values.title} />
-      {formik.touched.title && formik.errors.title ? <FormErrorText>{formik.errors.title}</FormErrorText> : null}
+    <form onSubmit={formik.handleSubmit} id="new-blog">
+      <VStack p={4}>
+        <FormControl isInvalid={formik.touched.title && formik.errors.title}>
+          <FormLabel htmlFor="title">title</FormLabel>
+          <Input id="title" name="title" type="text" onChange={formik.handleChange} value={formik.values.title} />
+          <FormErrorMessage>{formik.errors.title}</FormErrorMessage>
+        </FormControl>
 
-      <AppLable htmlFor="date">date</AppLable>
-      <AppInput id="date" name="date" type="date" onChange={formik.handleChange} value={formik.values.date} />
-      {formik.touched.date && formik.errors.date ? <FormErrorText>{formik.errors.date}</FormErrorText> : null}
+        <FormControl isInvalid={formik.touched.date && formik.errors.date}>
+          <FormLabel htmlFor="date">date</FormLabel>
+          <Input id="date" name="date" type="date" onChange={formik.handleChange} value={formik.values.date} />
+          <FormErrorMessage>{formik.errors.date}</FormErrorMessage>
+        </FormControl>
 
-      <AppLable htmlFor="author">author</AppLable>
-      <AppInput id="author" name="author" type="text" onChange={formik.handleChange} value={formik.values.author} />
-      {formik.touched.author && formik.errors.author ? <FormErrorText>{formik.errors.author}</FormErrorText> : null}
+        <FormControl isInvalid={formik.touched.author && formik.errors.author}>
+          <FormLabel htmlFor="author">author</FormLabel>
+          <Input id="author" name="author" type="text" onChange={formik.handleChange} value={formik.values.author} />
+          {<FormErrorMessage>{formik.errors.author}</FormErrorMessage>}
+        </FormControl>
 
-      <AppLable htmlFor="content">content</AppLable>
-      <AppTextarea
-        id="content"
-        name="content"
-        type="text"
-        onChange={formik.handleChange}
-        value={formik.values.content}
-      />
-      {formik.touched.content && formik.errors.content ? <FormErrorText>{formik.errors.content}</FormErrorText> : null}
+        <FormControl isInvalid={formik.touched.content && formik.errors.content}>
+          <FormLabel htmlFor="content">content</FormLabel>
+          <Textarea
+            id="content"
+            name="content"
+            type="text"
+            onChange={formik.handleChange}
+            value={formik.values.content}
+          />
+          <FormErrorMessage>{formik.errors.content}</FormErrorMessage>
+        </FormControl>
 
-      <AppLable htmlFor="photos">photos</AppLable>
-      {photosLoading ? (
-        <Preloader />
-      ) : (
-        <>
-          <AddPhotosButton>
-            <span>ADD PHOTOS</span>
-            <AppInput
-              type="file"
-              accept="image/*"
-              multiple={true}
-              name="photos"
-              onChange={(e) => createPhotosBlobs(e)}
-            />
-          </AddPhotosButton>
-          {photos.length > 0 && (
-            <MarginTopUtility>
-              <PhotosBox>
-                {photos.map((photo) => {
-                  return (
-                    <PhotoWrap key={photo.url}>
-                      <Delete onClick={() => deletePhoto(photo.id)} />
-                      <PhotoIcon src={photo.url} />;
-                    </PhotoWrap>
-                  );
-                })}
-              </PhotosBox>
-            </MarginTopUtility>
+        <FormControl>
+          <FormLabel htmlFor="photos">photos</FormLabel>
+          {photosLoading ? (
+            <Spinner />
+          ) : (
+            <>
+              <AddPhotosButton>
+                <span>ADD PHOTOS</span>
+                <input
+                  type="file"
+                  accept="image/*"
+                  multiple={true}
+                  name="photos"
+                  onChange={(e) => createPhotosBlobs(e)}
+                />
+              </AddPhotosButton>
+              {photos.length > 0 && (
+                <Wrap bg={cvPhotoBox} p={4} borderRadius="5px" justify={"center"}>
+                  {photos.map((photo) => {
+                    return (
+                      <Box key={photo.url} position="relative" bg={cvPhoto}>
+                        <Button onClick={() => deletePhoto(photo.id)} top={1} right={1} position="absolute" w={2} h={4}>
+                          <FaTrash />
+                        </Button>
+                        <PhotoIcon src={photo.url} />
+                      </Box>
+                    );
+                  })}
+                </Wrap>
+              )}
+            </>
           )}
-        </>
-      )}
-      <MarginTopUtility>
-        <AppButton type="submit">submit</AppButton>
-      </MarginTopUtility>
-    </Form>
+        </FormControl>
+        <Button type="submit" width={"full"}>
+          submit
+        </Button>
+      </VStack>
+    </form>
   );
 };
 
@@ -151,25 +173,6 @@ const AddPhotosButton = styled.div`
   }
 `;
 
-const Delete = styled(AiOutlineDelete)`
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background-color: ${(p) => p.theme.darkest};
-  color: ${(p) => p.theme.lightest};
-  padding: 0.5rem;
-  width: 2.5rem;
-  height: 2.5rem;
-  cursor: pointer;
-  border: 1px solid ${(p) => p.theme.error};
-`;
-
-const PhotoWrap = styled.div`
-  display: inline-block;
-  position: relative;
-  overflow: hidden;
-`;
-
 const PhotoIcon = styled.img`
   object-fit: contain;
   height: 15vh;
@@ -177,20 +180,3 @@ const PhotoIcon = styled.img`
   margin: 0.5rem;
 `;
 
-const PhotosBox = styled.div`
-  background-color: rgba(0, 0, 0, 0.6);
-  flex: 1;
-  padding: 1rem;
-  width: 100%;
-  overflow: auto;
-`;
-
-const MarginTopUtility = styled.div`
-  margin-top: 3rem;
-  display: flex;
-  justify-content: center;
-`;
-
-const Centering = styled(MarginTopUtility)`
-  margin: 0;
-`;
