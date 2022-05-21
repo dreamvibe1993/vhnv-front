@@ -1,9 +1,8 @@
 import React from "react";
 import styled from "styled-components/macro";
 import { FadeIn } from "../../../configs/css/animations";
-import { AiFillPlusCircle } from "react-icons/ai";
-import { AiFillMinusCircle } from "react-icons/ai";
-import { AppButton } from "../../styled-components/buttons/AppButton";
+import { Button } from "@chakra-ui/react";
+import { FaMinusCircle, FaPlusCircle } from "react-icons/fa";
 
 export const Gallery = ({ src, onClose = () => {} }) => {
   const picRef = React.useRef(null);
@@ -18,12 +17,21 @@ export const Gallery = ({ src, onClose = () => {} }) => {
   const TouchStartCoordsX = React.useRef(null);
   const TouchStartCoordsY = React.useRef(null);
 
+  React.useEffect(() => {
+    const body = document.querySelector("body");
+    body.style.overflow = "hidden";
+    return () => {
+      body.style.overflow = "auto";
+    };
+  });
+
   const endLoading = () => {
     setLoading(false);
   };
 
   const handleStart = (e) => {
     e.preventDefault();
+    e.stopPropagation();
     TouchStartCoordsX.current = e.clientX - x || e?.touches[0]?.clientX - x;
     TouchStartCoordsY.current = e.clientY - y || e?.touches[0]?.clientY - y;
     setMouseKeyPressed(true);
@@ -31,6 +39,7 @@ export const Gallery = ({ src, onClose = () => {} }) => {
 
   const handleMove = (e) => {
     e.preventDefault();
+    e.stopPropagation();
     if (!picRef.current) return;
     if (!isMouseKeyPressed) return;
     const clientX = e.clientX || e?.touches[0]?.clientX;
@@ -58,8 +67,8 @@ export const Gallery = ({ src, onClose = () => {} }) => {
   };
 
   return (
-    <PictureGallery fixedHeight={window.innerHeight}>
-      <TopPanel>{!isControlsHidden && <AppButton onClick={onClose}>CLOSE</AppButton>}</TopPanel>
+    <PictureGallery fixedHeight={window.innerHeight} onClick={(e) => e.preventDefault()}>
+      <TopPanel>{!isControlsHidden && <Button onClick={onClose}>CLOSE</Button>}</TopPanel>
       <PreloaderContainer style={{ visibility: isLoading ? "visible" : "hidden" }}>
         {/* <Preloader /> */}
       </PreloaderContainer>
@@ -80,16 +89,16 @@ export const Gallery = ({ src, onClose = () => {} }) => {
       </PicContainer>
       {!isControlsHidden && (
         <ButtonsPanel>
-          <ZoomOut onClick={zoomIn}>
-            <AiFillPlusCircle />
-          </ZoomOut>
-          <ZoomIn onClick={zoomOut}>
-            <AiFillMinusCircle />
-          </ZoomIn>
+          <Button w={20}>
+            <FaPlusCircle onClick={zoomIn} />
+          </Button>
+          <Button w={20}>
+            <FaMinusCircle onClick={zoomOut} />
+          </Button>
         </ButtonsPanel>
       )}
       <BottomPanel>
-        <AppButton onClick={toggleControls}>{isControlsHidden ? "SHOW" : "HIDE"} CONTROLS</AppButton>
+        <Button onClick={toggleControls}>{isControlsHidden ? "SHOW" : "HIDE"} CONTROLS</Button>
       </BottomPanel>
     </PictureGallery>
   );
@@ -144,42 +153,6 @@ const BottomPanel = styled(TopPanel)`
   left: 0;
 `;
 
-const Button = styled.div`
-  height: 60px;
-  width: 60px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  opacity: 0.5;
-  transition: all 0.1s linear;
-  user-select: none;
-  -khtml-user-select: none;
-  -o-user-select: none;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  cursor: pointer;
-  font-size: 36px;
-  font-weight: bolder;
-  color: ${(p) => p.theme.darkest};
-  svg {
-    width: 100%;
-    height: 80%;
-  }
-  &:active {
-    opacity: 1;
-  }
-`;
-
-const ZoomIn = styled(Button)`
-  background-color: ${(p) => p.theme.lightest};
-`;
-
-const ZoomOut = styled(Button)`
-  background-color: ${(p) => p.theme.lightest};
-`;
-
 const ButtonsPanel = styled.div`
   position: absolute;
   right: 10px;
@@ -208,6 +181,9 @@ const PictureGallery = styled.div`
   top: 0;
   left: 0;
   z-index: 1001;
-  background-color: ${(p) => p.theme.darkest};
+  backdrop-filter: blur(15px);
+  @supports not ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
   animation: ${FadeIn} 0.2s linear forwards;
 `;
