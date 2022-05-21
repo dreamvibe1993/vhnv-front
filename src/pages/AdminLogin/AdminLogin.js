@@ -1,13 +1,10 @@
 import React from "react";
-import styled from "styled-components";
 import { useFormik } from "formik";
 import { login, logout } from "../../api/auth";
 import { AuthContext } from "../../configs/contexts/auth";
 import { apassSchema } from "../../models/yup-validation-schemas/yup-song-schema";
-import { AppButton } from "../../ui/styled-components/buttons/AppButton";
 import { Form } from "../../ui/styled-components/forms/Form";
-import { FormErrorText } from "../../ui/styled-components/forms/FormErrorText";
-import { AppInput } from "../../ui/styled-components/inputs/AppInput";
+import { Button, FormControl, FormErrorMessage, Input, VStack } from "@chakra-ui/react";
 
 export const AdminLogin = () => {
   const { isAuth, setIsAuth, setLoading: setAppLoading } = React.useContext(AuthContext);
@@ -45,47 +42,34 @@ export const AdminLogin = () => {
 
   if (isAuth) {
     return (
-      <AdminLoginModalContainer>
-        <Form>
-          <ButtonWrapper>
-            <AppButton type="button" onClick={signOut}>
-              Log Out
-            </AppButton>
-          </ButtonWrapper>
-        </Form>
-      </AdminLoginModalContainer>
+      <Form>
+        <VStack spacing={4} align="flex-start" h={["calc(100vh - 60px - 155px)", "calc(100vh - 60px - 110px)"]}>
+          <Button type="button" onClick={signOut} width="full">
+            Log Out
+          </Button>
+        </VStack>
+      </Form>
     );
   }
 
   return (
     <>
-      <AdminLoginModalContainer>
-        <Form onSubmit={formik.handleSubmit}>
-          <AppInput
-            type="password"
-            id="password"
-            name="password"
-            onChange={formik.handleChange}
-            value={formik.values.password}
-          />
-          {formik.touched.password && formik.errors.password && <FormErrorText>{formik.errors.password}</FormErrorText>}
-          <ButtonWrapper>
-            <AppButton type="submit">submit</AppButton>
-          </ButtonWrapper>
-        </Form>
-      </AdminLoginModalContainer>
+      <Form onSubmit={formik.handleSubmit}>
+        <VStack spacing={4} align="flex-start" h={["calc(100vh - 60px - 155px)", "calc(100vh - 60px - 110px)"]}>
+          <FormControl isInvalid={!!formik.errors.password && formik.touched.password}>
+            <Input
+              pr="4.5rem"
+              type="password"
+              placeholder="Enter password"
+              onChange={formik.handleChange}
+              value={formik.values.password}
+              id='password'
+            />
+            <FormErrorMessage>{formik.errors.password}</FormErrorMessage>
+          </FormControl>
+            <Button type="submit" width="full">submit</Button>
+        </VStack>
+      </Form>
     </>
   );
 };
-
-const AdminLoginModalContainer = styled.div`
-  min-height: calc(100vh - 6.4rem - 5.5rem);
-  background-color: ${(p) => p.theme.darker};
-`;
-
-const ButtonWrapper = styled.div`
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  margin-top: 15px;
-`;

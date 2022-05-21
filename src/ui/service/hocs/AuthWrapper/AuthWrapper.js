@@ -1,8 +1,7 @@
 import React from "react";
-import styled from "styled-components";
+import {  Flex, Spinner } from "@chakra-ui/react";
 import { getStatus } from "../../../../api/auth";
 import { AuthContext } from "../../../../configs/contexts/auth";
-import { Preloader } from "../../../details/Preloader/Preloader";
 
 export const AuthWrapper = ({ children }) => {
   const [isAuth, setIsAuth] = React.useState(false);
@@ -23,16 +22,11 @@ export const AuthWrapper = ({ children }) => {
 
   if (isLoading)
     return (
-      <PreloaderWrapper>
-        <Preloader />
-      </PreloaderWrapper>
+      <Flex justify={'center'} h="100vh" align="center">
+        <Spinner />
+      </Flex>
     );
 
   return <AuthContext.Provider value={{ isAuth, setIsAuth, setLoading }}>{children}</AuthContext.Provider>;
 };
 
-const PreloaderWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  height: 50%;
-`;
