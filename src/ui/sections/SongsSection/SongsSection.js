@@ -2,7 +2,7 @@ import React from "react";
 import { appRoutes } from "../../../configs/app-routes/app-routes";
 import { useGetAllSongs } from "../../../services/hooks/songs/useGetAllSongs";
 import { useTranslation } from "react-i18next";
-import { Box, Button, Flex, Heading, Spinner, Wrap } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Spinner, Text, Wrap } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
 export const SongsNavigation = () => {
@@ -34,8 +34,14 @@ export const SongsNavigation = () => {
       <Wrap justify="center" spacing={5} mt={5}>
         {returnUniqueLetters(songs.sort(sortAlphabeticallyInRussian)).map((letter, index) => {
           return (
-            <Button key={letter + index} as={Link} to={`${appRoutes.songs.root}/${letter}`} textTransform="lowercase">
-              {letter}
+            <Button
+              key={letter + index}
+              as={Link}
+              to={`${appRoutes.songs.root}/${letter}`}
+              textTransform="lowercase"
+              fontSize={"1.3rem"}
+            >
+              <Text>{letter}</Text>
             </Button>
           );
         })}

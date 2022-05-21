@@ -48,7 +48,7 @@ export const BlogEntry = ({ blog }) => {
   return (
     <>
       {photoSrc && <Gallery src={photoSrc} onClose={hidePhoto} />}
-      <Box p="1rem" mr="1rem" ml="1rem" boxShadow="md" w="100%">
+      <Box p="1rem" mr="1rem" ml="1rem" boxShadow="md" w="100%" border={"1px solid rgba(0,0,0,.2)"}>
         <Heading mb={["1rem", null]}>{blog.title}</Heading>
         <Flex direction={["column", "row"]}>
           {Array.isArray(blog.photos) && blog.photos.length > 0 && (
