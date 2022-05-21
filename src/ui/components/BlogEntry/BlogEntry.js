@@ -44,11 +44,13 @@ export const BlogEntry = ({ blog }) => {
   };
 
   const phSectionBGColor = useColorModeValue("gray.200", "gray.900");
+  const boxBorderColor = useColorModeValue("1px solid rgba(0,0,0,.2)", "1px solid rgba(255,255,255,.2)");
+  const boxShadowColor = useColorModeValue("0px 3px 3px 1px rgba(0,0,0,.1)", "0px 3px 3px 1px rgba(255,255,255,.1)");
 
   return (
     <>
       {photoSrc && <Gallery src={photoSrc} onClose={hidePhoto} />}
-      <Box p="1rem" mr="1rem" ml="1rem" boxShadow="md" w="100%" border={"1px solid rgba(0,0,0,.2)"}>
+      <Box p="1rem" mr="1rem" ml="1rem" boxShadow={boxShadowColor} w="100%" border={boxBorderColor}>
         <Heading mb={["1rem", null]}>{blog.title}</Heading>
         <Flex direction={["column", "row"]}>
           {Array.isArray(blog.photos) && blog.photos.length > 0 && (
