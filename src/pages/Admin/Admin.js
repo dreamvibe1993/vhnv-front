@@ -1,7 +1,6 @@
-import { Box, Center, Flex, StackDivider, VStack } from "@chakra-ui/react";
+import { Box, StackDivider, VStack } from "@chakra-ui/react";
 import React from "react";
 import { Redirect } from "react-router-dom";
-import styled from "styled-components";
 import { appRoutes } from "../../configs/app-routes/app-routes";
 import { AuthContext } from "../../configs/contexts/auth";
 import { AppToolbar } from "../../ui/bars/AppToolbar";

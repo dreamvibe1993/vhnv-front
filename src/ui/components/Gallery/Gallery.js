@@ -175,8 +175,9 @@ const Pic = styled.img`
 `;
 
 const PictureGallery = styled.div`
+  margin-top: 0 !important;
   position: fixed;
-  height: 100%;
+  height: 100vh;
   width: 100%;
   top: 0;
   left: 0;

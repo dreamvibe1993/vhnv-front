@@ -1,12 +1,9 @@
 import React from "react";
-import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { useGetSongByLetter } from "../../services/hooks/songs/useGetSong";
-import { AppButton } from "../../ui/styled-components/buttons/AppButton";
 import { useDeleteSong } from "../../services/hooks/songs/useDeleteSong";
-import { AppSongTitle2 } from "../../ui/styled-components/titles/AppSongTitle2";
-import { Preloader } from "../../ui/details/Preloader/Preloader";
 import { AuthContext } from "../../configs/contexts/auth";
+import { Box, Button, Flex, Heading, Spinner, Text } from "@chakra-ui/react";
 
 export const Song = () => {
   const { isAuth } = React.useContext(AuthContext);
@@ -33,39 +30,20 @@ export const Song = () => {
 
   if (isLoading)
     return (
-      <SongContainer>
-        <PreloaderCentered>
-          <Preloader />
-        </PreloaderCentered>
-      </SongContainer>
+      <Flex p={4} justify="center">
+        <Spinner />
+      </Flex>
     );
 
   return (
-    <SongContainer>
+    <Box p={4}>
       {songs.map((song) => (
         <div key={song._id}>
-          <AppSongTitle2>{song.name}</AppSongTitle2>
-          <Lyrics> {song.lyrics}</Lyrics>
-          {isAuth && <AppButton onClick={() => deleteSong(song._id)}>delete</AppButton>}
-          <hr />
+          <Heading mb={2}>{song.name}</Heading>
+          <Text whiteSpace={"pre-wrap"}> {song.lyrics}</Text>
+          {isAuth && <Button onClick={() => deleteSong(song._id)} mt={2}>delete</Button>}
         </div>
       ))}
-    </SongContainer>
+    </Box>
   );
 };
-
-const PreloaderCentered = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
-const Lyrics = styled.div`
-  font-size: 1.6rem;
-  white-space: pre-wrap;
-  text-transform: lowercase;
-`;
-
-const SongContainer = styled.div`
-  padding: 1.5rem;
-  min-height: 100vh;
-`;

@@ -23,11 +23,9 @@ export const SongsNavigation = () => {
 
   if (songs.length < 1)
     return (
-      <Box w="100%">
-        <Flex justify="center" wrap="wrap">
-          <Spinner />
-        </Flex>
-      </Box>
+      <Flex w="100%" minH={"192px"} justify="center" wrap="wrap" align={"center"}>
+        <Spinner />
+      </Flex>
     );
 
   return (
@@ -45,4 +43,3 @@ export const SongsNavigation = () => {
     </Box>
   );
 };
-

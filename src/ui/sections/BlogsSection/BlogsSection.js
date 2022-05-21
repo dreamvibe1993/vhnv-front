@@ -10,7 +10,7 @@ export const BlogsSection = () => {
 
   if (blogs === 0) {
     return (
-      <Flex justify="center">
+      <Flex justify="center" minH="192px" align={"center"}>
         <Spinner />
       </Flex>
     );
@@ -18,8 +18,8 @@ export const BlogsSection = () => {
 
   if (blogs.length < 1) {
     return (
-      <Box>
-        <Heading>{t("blog:graphomania").toUpperCase()}</Heading>
+      <Box p="1rem">
+        <Heading align="center">{t("blog:graphomania").toUpperCase()}</Heading>
         <Text>{t("blog:noBlogs")}</Text>
       </Box>
     );
@@ -36,4 +36,3 @@ export const BlogsSection = () => {
     </Box>
   );
 };
-
