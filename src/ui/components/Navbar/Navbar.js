@@ -131,8 +131,8 @@ const DesktopNavItem = ({ label, href }) => {
         <PopoverTrigger>
           <Text
             p={2}
-            as={Link}
-            to={href ?? "#"}
+            as="a"
+            href={href ?? "#"}
             fontSize={"sm"}
             fontWeight={500}
             _hover={{
@@ -152,8 +152,8 @@ const MobileNavItem = ({ label, href }) => {
     <Stack p={4} display={{ md: "none" }}>
       <Flex
         py={2}
-        as={Link}
-        to={href ?? "#"}
+        as="a"
+        href={href ?? "#"}
         justify={"space-between"}
         align={"center"}
         _hover={{

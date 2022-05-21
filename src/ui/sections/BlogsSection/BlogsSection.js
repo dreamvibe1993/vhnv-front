@@ -26,7 +26,7 @@ export const BlogsSection = () => {
   }
 
   return (
-    <Box id="#graphomania" p="1rem" >
+    <Box id="graphomania" p="1rem" >
       <Heading align="center" mb={4}>{t("blog:graphomania").toUpperCase()}</Heading>
       <VStack spacing={4}>
         {blogs.map((blog) => {
