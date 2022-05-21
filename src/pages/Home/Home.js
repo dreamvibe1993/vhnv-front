@@ -6,7 +6,7 @@ import { SongsNavigation } from "../../ui/sections/SongsSection/SongsSection";
 
 export const Home = () => {
   return (
-    <VStack divider={<StackDivider borderColor="gray.200" />} align="stretch">
+    <VStack divider={<StackDivider borderColor="gray.200" />} align="stretch" minH="calc(100vh - 60px - 64px)">
       <About />
       <SongsNavigation />
       <BlogsSection />

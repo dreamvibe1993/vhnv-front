@@ -1,33 +1,46 @@
 import React from "react";
-import styled, { css, useTheme } from "styled-components";
 
-import { FaBars } from "react-icons/fa";
-
-import { size } from "../../../configs/css/breakpoints";
-import { ThemeProviderContext } from "../../../configs/contexts/theme";
-import { themes } from "../../../configs/css/colors";
-import { Link, useHistory } from "react-router-dom";
 import { appRoutes } from "../../../configs/app-routes/app-routes";
 import { useTranslation } from "react-i18next";
+import {
+  Box,
+  Button,
+  Collapse,
+  Flex,
+  IconButton,
+  Popover,
+  PopoverTrigger,
+  Stack,
+  Text,
+  useDisclosure,
+  useColorMode,
+  useColorModeValue,
+} from "@chakra-ui/react";
+import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
+import { Link } from "react-router-dom";
 
 export const Navbar = () => {
-  const theme = useTheme();
-  const history = useHistory();
   const { t, i18n } = useTranslation();
-  const { setTheme } = React.useContext(ThemeProviderContext);
-
-  const [isMenuOpen, setMenuOpen] = React.useState(false);
-
-  function toggleMenu() {
-    setMenuOpen((prev) => !prev);
-  }
-
-  function toggleTheme() {
-    let index = theme.id;
-    if (index > 2) index = 0;
-    setTheme(themes[index]);
-    localStorage.setItem("theme", index);
-  }
+  const navItems = [
+    {
+      label: t("common:home"),
+      href: appRoutes.home.root,
+    },
+    {
+      label: t("blog:graphomania"),
+      href: "#graphomania",
+    },
+    {
+      label: t("common:contacts"),
+      href: null,
+    },
+    {
+      label: t("common:about"),
+      href: null,
+    },
+  ];
+  const { colorMode, toggleColorMode } = useColorMode();
+  const { isOpen, onToggle } = useDisclosure();
 
   function changeLanguage() {
     const languages = ["ru", "en"];
@@ -39,6 +52,7 @@ export const Navbar = () => {
     localStorage.setItem("locale", languages[index]);
   }
 
+  /*
   const intervalID = React.useRef(0);
 
   function startCountdown() {
@@ -55,100 +69,99 @@ export const Navbar = () => {
   function finishCountdown() {
     clearInterval(intervalID.current);
   }
-
+  */
   return (
-    <NavbarContainer isMenuOpen={isMenuOpen}>
-      <NavButton to={appRoutes.home.root} onTouchStart={startCountdown} onTouchEnd={finishCountdown}>
-        {t("common:home")}
-      </NavButton>
-      <NavButtonAnchor href="#graphomania">{t("blog:graphomania")}</NavButtonAnchor>
-      <NavButton href="#contact">{t("common:contacts")}</NavButton>
-      <NavButton href="#about">{t("common:about")}</NavButton>
-      <Buttons>
-        <ChangeLng onClick={changeLanguage}>{i18n.language}</ChangeLng>
-        <Colors type="button" onClick={toggleTheme}>
-          {theme.id}
-        </Colors>
-        <Bars type="button" onClick={toggleMenu} isMenuOpen={isMenuOpen}>
-          <FaBars />
-        </Bars>
-      </Buttons>
-    </NavbarContainer>
+    <Box bg={useColorModeValue("gray.50", "gray.900")} color={useColorModeValue("gray.700", "gray.200")}>
+      <Flex
+        minH={"60px"}
+        py={{ base: 2 }}
+        px={{ base: 4 }}
+        borderBottom={1}
+        borderStyle={"solid"}
+        align={"center"}
+        borderColor="gray.200"
+      >
+        <Flex flex={{ base: 1, md: "auto" }} ml={{ base: -2 }} display={{ base: "flex", md: "none" }}>
+          <IconButton
+            onClick={onToggle}
+            icon={isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />}
+            variant={"ghost"}
+            aria-label={"Toggle Navigation"}
+          />
+        </Flex>
+        <Flex flex={{ base: 1 }} justify={{ base: "end", md: "space-between" }} align="center">
+          {/* <Text
+            textAlign={useBreakpointValue({ base: "center", md: "left" })}
+            fontFamily={"heading"}
+            color={useColorModeValue("gray.800", "white")}
+          >
+            Logo
+          </Text> */}
+          <Flex display={{ base: "none", md: "flex" }} ml={10}>
+            <Stack direction={"row"} spacing={4}>
+              {navItems.map((navItem, i) => {
+                return <DesktopNavItem {...navItem} key={i}></DesktopNavItem>;
+              })}
+            </Stack>
+          </Flex>
+          <Flex>
+            <Button onClick={toggleColorMode} mr={[3, 5]}>
+              {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+            </Button>
+            <Button onClick={changeLanguage}>{i18n.language}</Button>
+          </Flex>
+        </Flex>
+      </Flex>
+
+      <Collapse in={isOpen} animateOpacity>
+        <Stack p={4} display={{ md: "none" }}>
+          {navItems.map((navItem, i) => {
+            return <MobileNavItem {...navItem} key={i}></MobileNavItem>;
+          })}
+        </Stack>
+      </Collapse>
+    </Box>
   );
 };
 
-const NavbarContainer = styled.header`
-  background-color: ${(p) => p.theme.darkest};
-  overflow: hidden;
-  display: flex;
-  justify-content: flex-start;
-  font-size: 1.7rem;
-  position: relative;
-  @media (max-width: ${size.mobileL}) {
-    justify-content: space-between;
-    flex-direction: ${(p) => (p.isMenuOpen ? "column" : "none")};
-    position: relative;
-    a:first-child {
-      text-align: left;
-      flex: 1;
-    }
-    a:not(:first-child) {
-      display: ${(p) => (p.isMenuOpen ? "block" : "none")};
-      z-index: 10;
-    }
-  }
-  * {
-    transition: all 0.1s linear;
-  }
-`;
+const DesktopNavItem = ({ label, href }) => {
+  return (
+    <Box key={label}>
+      <Popover trigger={"hover"} placement={"bottom-start"}>
+        <PopoverTrigger>
+          <Text
+            p={2}
+            as={Link}
+            to={href ?? "#"}
+            fontSize={"sm"}
+            fontWeight={500}
+            _hover={{
+              textDecoration: "none",
+            }}
+          >
+            {label}
+          </Text>
+        </PopoverTrigger>
+      </Popover>
+    </Box>
+  );
+};
 
-const NavButtStyle = css`
-  color: ${(p) => p.theme.lightest};
-  text-align: center;
-  padding: 1.5rem;
-  text-decoration: none;
-  position: relative;
-  text-transform: capitalize;
-  &:visited {
-    color: inherit;
-  }
-  &:active {
-    background-color: ${(p) => p.theme.medium};
-    color: ${(p) => p.theme.lightest};
-  }
-`;
-
-const NavButton = styled(Link)`
-  ${NavButtStyle}
-`;
-
-const NavButtonAnchor = styled.a`
-  ${NavButtStyle}
-`;
-
-const Bars = styled.button`
-  padding: 0.8em 0.9em;
-  color: ${(p) => p.theme.lightest};
-  background-color: ${(p) => (p.isMenuOpen ? p.theme.darker : p.theme.darkest)};
-  @media (min-width: ${size.mobileL}) {
-    display: none;
-  }
-`;
-
-const Colors = styled.button`
-  padding: 0.8em 0.9em;
-  color: ${(p) => p.theme.lightest};
-  background-color: ${(p) => p.theme.darkest};
-`;
-
-const Buttons = styled.div`
-  height: 100%;
-  background-color: ${(p) => p.theme.darkest};
-  position: absolute;
-  right: 0;
-  button {
-    border: none;
-  }
-`;
-
-const ChangeLng = styled(Colors)``;
+const MobileNavItem = ({ label, href }) => {
+  return (
+    <Stack p={4} display={{ md: "none" }}>
+      <Flex
+        py={2}
+        as={Link}
+        to={href ?? "#"}
+        justify={"space-between"}
+        align={"center"}
+        _hover={{
+          textDecoration: "none",
+        }}
+      >
+        <Text fontWeight={600}>{label}</Text>
+      </Flex>
+    </Stack>
+  );
+};

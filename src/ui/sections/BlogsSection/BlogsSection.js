@@ -1,11 +1,8 @@
-import { Box, Flex, Heading, Spinner, StackDivider, Text, VStack } from "@chakra-ui/react";
+import { Box, Flex, Heading, Spinner, Text, VStack } from "@chakra-ui/react";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import styled from "styled-components";
 import { useGetAllBlogs } from "../../../services/hooks/blogs/useGetAllBlogs";
 import { BlogEntry } from "../../components/BlogEntry/BlogEntry";
-import { Preloader } from "../../details/Preloader/Preloader";
-import { AppSectionTitle1 } from "../../styled-components/titles/AppSectionTitle1";
 
 export const BlogsSection = () => {
   const { t } = useTranslation();

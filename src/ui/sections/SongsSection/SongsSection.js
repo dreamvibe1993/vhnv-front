@@ -1,12 +1,9 @@
 import React from "react";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
 import { appRoutes } from "../../../configs/app-routes/app-routes";
 import { useGetAllSongs } from "../../../services/hooks/songs/useGetAllSongs";
-import { Preloader } from "../../details/Preloader/Preloader";
 import { useTranslation } from "react-i18next";
-import { AppSectionTitle1 } from "../../styled-components/titles/AppSectionTitle1";
-import { Box, Container, Flex, Heading, Spinner } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Spinner, Wrap } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 
 export const SongsNavigation = () => {
   const { t } = useTranslation();
@@ -36,34 +33,16 @@ export const SongsNavigation = () => {
   return (
     <Box w="100%" p="1rem">
       <Heading align="center">{t("common:songs").toUpperCase()}</Heading>
-      <Flex justify="center" wrap="wrap">
+      <Wrap justify="center" spacing={5} mt={5}>
         {returnUniqueLetters(songs.sort(sortAlphabeticallyInRussian)).map((letter, index) => {
           return (
-            <SongLink key={letter + index} to={`${appRoutes.songs.root}/${letter}`}>
+            <Button key={letter + index} as={Link} to={`${appRoutes.songs.root}/${letter}`}>
               {letter}
-            </SongLink>
+            </Button>
           );
         })}
-      </Flex>
+      </Wrap>
     </Box>
   );
 };
 
-const SongLink = styled(Link)`
-  font-size: 2rem;
-  padding: 0.3em;
-  width: 3.5rem;
-  margin: 0.3rem;
-  text-align: center;
-  text-decoration: none;
-  color: inherit;
-  background-color: ${(p) => p.theme.darkest};
-  cursor: pointer;
-  font-family: "Alice", serif;
-  text-transform: uppercase;
-`;
-
-const PreloaderWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-`;
