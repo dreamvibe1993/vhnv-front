@@ -1,12 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
+import { useInView } from "react-intersection-observer";
 import { Gallery } from "../Gallery/Gallery";
 import { AuthContext } from "../../../configs/contexts/auth";
 import { deleteBlog } from "../../../api/blog";
 import {
   Box,
   Button,
+  Fade,
   Flex,
   Grid,
   GridItem,
@@ -18,11 +20,22 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
+
 export const BlogEntry = ({ blog }) => {
   const { isAuth } = React.useContext(AuthContext);
-
   const { t } = useTranslation();
+  const { ref, inView } = useInView({
+    delay: 600,
+    threshold: 0,
+  });
+
   const [photoSrc, setPhotoSrc] = React.useState(null);
+  const [beenInView, setBeenInView] = React.useState(false);
+
+  React.useEffect(() => {
+    if (beenInView) return;
+    setBeenInView(inView);
+  }, [inView, beenInView]);
 
   const showPhoto = (src) => {
     setPhotoSrc(src);
@@ -50,53 +63,64 @@ export const BlogEntry = ({ blog }) => {
   return (
     <>
       {photoSrc && <Gallery src={photoSrc} onClose={hidePhoto} />}
-      <Box p="1rem" mr="1rem" ml="1rem" boxShadow={boxShadowColor} w="100%" border={boxBorderColor}>
-        <Heading mb={["1rem", null]}>{blog.title}</Heading>
-        <Flex direction={["column", "row"]}>
-          {Array.isArray(blog.photos) && blog.photos.length > 0 && (
-            <PhotoSection
-              templateRows="repeat(3, auto)"
-              templateColumns="repeat(2, auto)"
-              justifyContent="center"
-              h="40vh"
-              w={[null, "40%"]}
-              bg={phSectionBGColor}
-            >
-              {blog.photos.map((phSrc) => {
-                return (
-                  <PhotoSectionCell key={phSrc} onClick={() => showPhoto(phSrc)} gridArea="auto">
-                    <Image src={phSrc} w="100%" h="100%" minH="40vh" objectFit="cover" />
-                  </PhotoSectionCell>
-                );
-              })}
-            </PhotoSection>
-          )}
-          <VStack divider={<StackDivider borderColor="gray.200" />} ml={[null, "4rem"]} w="100%" mt={["1rem", null]}>
-            <Flex w="100%" justify="space-between">
-              <Text>{blog.author}</Text>
-              <Heading size="xs" color="gray.300">
-                {t("blog:by")}
-              </Heading>
-            </Flex>
-            <Text h="100%">
-              <span>{blog.content}</span>
-            </Text>
-            <Flex w="100%" justify="space-between">
-              <Text>{new Date(blog.date).toDateString()}</Text>
-              <Heading size="xs" color="gray.300">
-                {t("blog:date")}
-              </Heading>
-            </Flex>
-            {isAuth && (
-              <Flex w="100%">
-                <Button type="button" onClick={() => deleteThisBlog(blog._id)} variant="outline">
-                  Delete
-                </Button>
-              </Flex>
+      <Fade in={beenInView}>
+        <Box
+          p="1rem"
+          mr="1rem"
+          ml="1rem"
+          boxShadow={boxShadowColor}
+          w="calc(100vw - 2rem)"
+          border={boxBorderColor}
+          ref={ref}
+          position="relative"
+        >
+          <Heading mb={["1rem", null]}>{blog.title}</Heading>
+          <Flex direction={["column", "row"]}>
+            {Array.isArray(blog.photos) && blog.photos.length > 0 && (
+              <PhotoSection
+                templateRows="repeat(3, auto)"
+                templateColumns="repeat(2, auto)"
+                justifyContent="center"
+                h="40vh"
+                w={[null, "40%"]}
+                bg={phSectionBGColor}
+              >
+                {blog.photos.map((phSrc) => {
+                  return (
+                    <PhotoSectionCell key={phSrc} onClick={() => showPhoto(phSrc)} gridArea="auto">
+                      <Image src={phSrc} w="100%" h="100%" minH="40vh" objectFit="cover" />
+                    </PhotoSectionCell>
+                  );
+                })}
+              </PhotoSection>
             )}
-          </VStack>
-        </Flex>
-      </Box>
+            <VStack divider={<StackDivider borderColor="gray.200" />} ml={[null, "4rem"]} w="100%" mt={["1rem", null]}>
+              <Flex w="100%" justify="space-between">
+                <Text>{blog.author}</Text>
+                <Heading size="xs" color="gray.300">
+                  {t("blog:by")}
+                </Heading>
+              </Flex>
+              <Text h="100%">
+                <span>{blog.content}</span>
+              </Text>
+              <Flex w="100%" justify="space-between">
+                <Text>{new Date(blog.date).toDateString()}</Text>
+                <Heading size="xs" color="gray.300">
+                  {t("blog:date")}
+                </Heading>
+              </Flex>
+              {isAuth && (
+                <Flex w="100%">
+                  <Button type="button" onClick={() => deleteThisBlog(blog._id)} variant="outline">
+                    Delete
+                  </Button>
+                </Flex>
+              )}
+            </VStack>
+          </Flex>
+        </Box>
+      </Fade>
     </>
   );
 };
