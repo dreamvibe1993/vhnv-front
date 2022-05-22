@@ -160,10 +160,11 @@ const AddPhotosButton = styled.div`
   width: 100%;
   overflow: hidden;
   position: relative;
-  background-color: ${(p) => p.theme.light};
-  color: ${(p) => p.theme.darkest};
   input {
     opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
   }
   span {
     position: absolute;
@@ -179,4 +180,3 @@ const PhotoIcon = styled.img`
   width: 25vw;
   margin: 0.5rem;
 `;
-

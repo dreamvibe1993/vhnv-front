@@ -64,8 +64,8 @@ export const BlogEntry = ({ blog }) => {
             >
               {blog.photos.map((phSrc) => {
                 return (
-                  <PhotoSectionCell key={phSrc} onClick={() => showPhoto(phSrc)}>
-                    <Image src={phSrc} w="100%" h="100%" objectFit="cover" />
+                  <PhotoSectionCell key={phSrc} onClick={() => showPhoto(phSrc)} gridArea="auto">
+                    <Image src={phSrc} w="100%" h="100%" minH="40vh" objectFit="cover" />
                   </PhotoSectionCell>
                 );
               })}
