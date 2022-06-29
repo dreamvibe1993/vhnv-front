@@ -4,10 +4,21 @@ import { login, logout } from "../../api/auth";
 import { AuthContext } from "../../configs/contexts/auth";
 import { apassSchema } from "../../models/yup-validation-schemas/yup-song-schema";
 import { Form } from "../../ui/styled-components/forms/Form";
-import { Button, FormControl, FormErrorMessage, Input, VStack } from "@chakra-ui/react";
+import {
+  Button,
+  Flex,
+  FormControl,
+  FormErrorMessage,
+  Input,
+  VStack,
+} from "@chakra-ui/react";
 
 export const AdminLogin = () => {
-  const { isAuth, setIsAuth, setLoading: setAppLoading } = React.useContext(AuthContext);
+  const {
+    isAuth,
+    setIsAuth,
+    setLoading: setAppLoading,
+  } = React.useContext(AuthContext);
 
   const formik = useFormik({
     initialValues: {
@@ -43,7 +54,11 @@ export const AdminLogin = () => {
   if (isAuth) {
     return (
       <Form>
-        <VStack spacing={4} align="flex-start" h={["calc(100vh - 60px - 155px)", "calc(100vh - 60px - 110px)"]}>
+        <VStack
+          spacing={4}
+          align="flex-start"
+          h={["calc(100vh - 60px - 155px)", "calc(100vh - 60px - 110px)"]}
+        >
           <Button type="button" onClick={signOut} width="full">
             Log Out
           </Button>
@@ -55,19 +70,31 @@ export const AdminLogin = () => {
   return (
     <>
       <Form onSubmit={formik.handleSubmit}>
-        <VStack spacing={4} align="flex-start" h={["calc(100vh - 60px - 155px)", "calc(100vh - 60px - 110px)"]}>
-          <FormControl isInvalid={!!formik.errors.password && formik.touched.password}>
-            <Input
-              pr="4.5rem"
-              type="password"
-              placeholder="Enter password"
-              onChange={formik.handleChange}
-              value={formik.values.password}
-              id='password'
-            />
-            <FormErrorMessage>{formik.errors.password}</FormErrorMessage>
-          </FormControl>
-            <Button type="submit" width="full">submit</Button>
+        <VStack
+          spacing={4}
+          align="center"
+          h={["calc(100vh - 60px - 155px)", "calc(100vh - 60px - 110px)"]}
+          justify="center"
+        >
+          <Flex align={"center"} direction="column" maxW={320}>
+            <FormControl
+              isInvalid={!!formik.errors.password && formik.touched.password}
+              mb={5}
+            >
+              <Input
+                pr="4.5rem"
+                type="password"
+                placeholder="Enter password"
+                onChange={formik.handleChange}
+                value={formik.values.password}
+                id="password"
+              />
+              <FormErrorMessage>{formik.errors.password}</FormErrorMessage>
+            </FormControl>
+            <Button type="submit" width="50%">
+              submit
+            </Button>
+          </Flex>
         </VStack>
       </Form>
     </>

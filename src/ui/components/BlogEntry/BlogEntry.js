@@ -20,7 +20,6 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-
 export const BlogEntry = ({ blog }) => {
   const { isAuth } = React.useContext(AuthContext);
   const { t } = useTranslation();
@@ -57,23 +56,28 @@ export const BlogEntry = ({ blog }) => {
   };
 
   const phSectionBGColor = useColorModeValue("gray.200", "gray.900");
-  const boxBorderColor = useColorModeValue("1px solid rgba(0,0,0,.2)", "1px solid rgba(255,255,255,.2)");
-  const boxShadowColor = useColorModeValue("0px 3px 3px 1px rgba(0,0,0,.1)", "0px 3px 3px 1px rgba(255,255,255,.1)");
+  const boxBorderColor = useColorModeValue(
+    "1px solid rgba(0,0,0,.2)",
+    "1px solid rgba(255,255,255,.2)"
+  );
+  const boxShadowColor = useColorModeValue(
+    "0px 3px 3px 1px rgba(0,0,0,.1)",
+    "0px 3px 3px 1px rgba(255,255,255,.1)"
+  );
 
   return (
     <>
       {photoSrc && <Gallery src={photoSrc} onClose={hidePhoto} />}
-      <Fade in={beenInView}>
-        <Box
-          p="1rem"
-          mr="1rem"
-          ml="1rem"
-          boxShadow={boxShadowColor}
-          w="calc(100vw - 2rem)"
-          border={boxBorderColor}
-          ref={ref}
-          position="relative"
-        >
+      <Box
+        p="1rem"
+        boxShadow={boxShadowColor}
+        w="100%"
+        border={boxBorderColor}
+        ref={ref}
+        position="relative"
+        bgColor={useColorModeValue("whiteAlpha.900", "gray.900")}
+      >
+        <Fade in={beenInView}>
           <Heading mb={["1rem", null]}>{blog.title}</Heading>
           <Flex direction={["column", "row"]}>
             {Array.isArray(blog.photos) && blog.photos.length > 0 && (
@@ -87,14 +91,29 @@ export const BlogEntry = ({ blog }) => {
               >
                 {blog.photos.map((phSrc) => {
                   return (
-                    <PhotoSectionCell key={phSrc} onClick={() => showPhoto(phSrc)} gridArea="auto">
-                      <Image src={phSrc} w="100%" h="100%" minH="40vh" objectFit="cover" />
+                    <PhotoSectionCell
+                      key={phSrc}
+                      onClick={() => showPhoto(phSrc)}
+                      gridArea="auto"
+                    >
+                      <Image
+                        src={phSrc}
+                        w="100%"
+                        h="100%"
+                        minH="40vh"
+                        objectFit="cover"
+                      />
                     </PhotoSectionCell>
                   );
                 })}
               </PhotoSection>
             )}
-            <VStack divider={<StackDivider borderColor="gray.200" />} ml={[null, "4rem"]} w="100%" mt={["1rem", null]}>
+            <VStack
+              divider={<StackDivider borderColor="gray.200" />}
+              ml={[null, "4rem"]}
+              w="100%"
+              mt={["1rem", null]}
+            >
               <Flex w="100%" justify="space-between">
                 <Text>{blog.author}</Text>
                 <Heading size="xs" color="gray.300">
@@ -112,15 +131,19 @@ export const BlogEntry = ({ blog }) => {
               </Flex>
               {isAuth && (
                 <Flex w="100%">
-                  <Button type="button" onClick={() => deleteThisBlog(blog._id)} variant="outline">
+                  <Button
+                    type="button"
+                    onClick={() => deleteThisBlog(blog._id)}
+                    variant="outline"
+                  >
                     Delete
                   </Button>
                 </Flex>
               )}
             </VStack>
           </Flex>
-        </Box>
-      </Fade>
+        </Fade>
+      </Box>
     </>
   );
 };

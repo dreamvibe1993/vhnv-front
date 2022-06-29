@@ -1,6 +1,6 @@
-import { Center, Collapse, Divider, VStack } from "@chakra-ui/react";
+import { Box, Center, Collapse, VStack } from "@chakra-ui/react";
 import React from "react";
-import { FaChevronDown } from "react-icons/fa";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { About } from "../../ui/sections/About/About";
 import { BlogsSection } from "../../ui/sections/BlogsSection/BlogsSection";
 import { SongsNavigation } from "../../ui/sections/SongsSection/SongsSection";
@@ -10,7 +10,7 @@ export const Home = () => {
   // const [isAboutOpenByUser, setAboutOpenByUser] = React.useState(false);
 
   const toggleAboutSectionOnUser = () => {
-  // setAboutOpenByUser((prev) => !prev);
+    // setAboutOpenByUser((prev) => !prev);
     setAboutSectionOpen((prev) => !prev);
   };
 
@@ -34,19 +34,22 @@ export const Home = () => {
   */
 
   return (
-    <VStack align="stretch" minH="calc(100vh - 60px - 64px)">
-      <Collapse in={isAboutSectionOpen} animateOpacity>
-        <About />
-      </Collapse>
-      <Collapse in={!isAboutSectionOpen} animateOpacity>
-        <Center onClick={toggleAboutSectionOnUser} cursor="pointer">
-          <FaChevronDown />
-        </Center>
-      </Collapse>
-      <Divider borderColor="gray.200" />
-      <SongsNavigation />
-      <Divider borderColor="gray.200" />
-      <BlogsSection />
+    <VStack minH="calc(100vh - 60px - 64px)" bg="base">
+      <Box maxW="1024px">
+        <Collapse in={isAboutSectionOpen} animateOpacity>
+          <About />
+          <SongsNavigation />
+          <Center onClick={toggleAboutSectionOnUser} cursor="pointer">
+            <FaChevronUp   />
+          </Center>
+        </Collapse>
+        <Collapse in={!isAboutSectionOpen} animateOpacity>
+          <Center onClick={toggleAboutSectionOnUser} cursor="pointer" mt={5}>
+            <FaChevronDown />
+          </Center>
+        </Collapse>
+        <BlogsSection />
+      </Box>
     </VStack>
   );
 };

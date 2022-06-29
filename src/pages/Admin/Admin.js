@@ -4,7 +4,10 @@ import { Redirect } from "react-router-dom";
 import { appRoutes } from "../../configs/app-routes/app-routes";
 import { AuthContext } from "../../configs/contexts/auth";
 import { AppToolbar } from "../../ui/bars/AppToolbar";
-import { AppButton, AppButtonLink } from "../../ui/styled-components/buttons/AppButton";
+import {
+  AppButton,
+  AppButtonLink,
+} from "../../ui/styled-components/buttons/AppButton";
 import { AppSongTitle2 } from "../../ui/styled-components/titles/AppSongTitle2";
 import { SubmitBlogForm } from "./Forms/SubmitBlogForm";
 import { SubmitSongForm } from "./Forms/SubmitSongForm";
@@ -17,19 +20,17 @@ export const Admin = () => {
   if (!isAuth) return <Redirect to={appRoutes.login.root} />;
 
   return (
-    <VStack divider={<StackDivider borderColor="gray.200" />} w="100vw">
+    <VStack divider={<StackDivider borderColor="gray.200" />}>
+      <Box maxW="1024px" w="100%">
       <AppToolbar>
         <AppButtonLink href="#new-song">new song</AppButtonLink>
         <AppButtonLink href="#new-blog">new blog</AppButtonLink>
         <AppButton type="button">new insta</AppButton>
       </AppToolbar>
-      <Box w="100vw">
-        <AppSongTitle2>New Song</AppSongTitle2>
-        <SubmitSongForm />
-      </Box>
-      <Box w="100vw">
-        <AppSongTitle2>New Blog</AppSongTitle2>
-        <SubmitBlogForm />
+      <AppSongTitle2>New Song</AppSongTitle2>
+      <SubmitSongForm />
+      <AppSongTitle2>New Blog</AppSongTitle2>
+      <SubmitBlogForm />
       </Box>
     </VStack>
   );

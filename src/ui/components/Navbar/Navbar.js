@@ -17,7 +17,6 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
-import { Link } from "react-router-dom";
 
 export const Navbar = () => {
   const { t, i18n } = useTranslation();

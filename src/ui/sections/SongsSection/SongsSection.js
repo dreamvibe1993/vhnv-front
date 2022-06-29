@@ -31,7 +31,7 @@ export const SongsNavigation = () => {
   return (
     <Box w="100%" p="1rem">
       <Heading align="center">{t("common:songs").toUpperCase()}</Heading>
-      <Wrap justify="center" spacing={5} mt={5}>
+      <Wrap justify="center" spacing={5} mt={5} pb={2}>
         {returnUniqueLetters(songs.sort(sortAlphabeticallyInRussian)).map((letter, index) => {
           return (
             <Button
@@ -40,6 +40,10 @@ export const SongsNavigation = () => {
               to={`${appRoutes.songs.root}/${letter}`}
               textTransform="lowercase"
               fontSize={"1.3rem"}
+              border="1px"
+              borderStyle={"solid"}
+              borderColor="gray.300"
+              shadow={"md"}
             >
               <Text>{letter}</Text>
             </Button>
