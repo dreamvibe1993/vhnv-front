@@ -16,6 +16,10 @@ import { BlogEntry } from "../../components/BlogEntry/BlogEntry";
 export const BlogsSection = () => {
   const { t } = useTranslation();
   const blogs = useGetAllBlogs();
+  const gradient = useColorModeValue(
+    "radial(blue.900, gray.900 )",
+    "radial(whiteAlpha.900, blue.100 )"
+  )
 
   if (blogs === 0) {
     return (
@@ -49,11 +53,7 @@ export const BlogsSection = () => {
               >
                 <FunnyLetterCont>
                   <FunnyLetter
-                    // eslint-disable-next-line react-hooks/rules-of-hooks
-                    bgGradient={useColorModeValue(
-                      "radial(blue.900, gray.900 )",
-                      "radial(whiteAlpha.900, blue.100 )"
-                    )}
+                    bgGradient={gradient}
                     bgClip="text"
                     fontWeight="extrabold"
                   >

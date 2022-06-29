@@ -64,6 +64,7 @@ export const BlogEntry = ({ blog }) => {
     "0px 3px 3px 1px rgba(0,0,0,.1)",
     "0px 3px 3px 1px rgba(255,255,255,.1)"
   );
+  const OHMYGOD = useColorModeValue("whiteAlpha.900", "gray.900");
 
   return (
     <>
@@ -75,7 +76,7 @@ export const BlogEntry = ({ blog }) => {
         border={boxBorderColor}
         ref={ref}
         position="relative"
-        bgColor={useColorModeValue("whiteAlpha.900", "gray.900")}
+        bgColor={OHMYGOD}
       >
         <Fade in={beenInView}>
           <Heading mb={["1rem", null]}>{blog.title}</Heading>
